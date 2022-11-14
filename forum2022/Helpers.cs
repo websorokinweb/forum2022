@@ -6,7 +6,7 @@ namespace forum2022
 {
     internal class Helpers
     {
-        public double SaveUserDouble(string message, string errorMessage)
+        public static double SaveUserDouble(string message, string errorMessage)
         {
             double correctUserInput;
             string userInput;
@@ -21,7 +21,7 @@ namespace forum2022
             return correctUserInput;
         }
 
-        public int SaveUserInt(string message, string errorMessage)
+        public static int SaveUserInt(string message, string errorMessage)
         {
             int correctUserInput;
             string userInput;
@@ -36,7 +36,7 @@ namespace forum2022
             return correctUserInput;
         }
 
-        public string SaveUserStr(string message, string errorMessage)
+        public static string SaveUserStr(string message, string errorMessage)
         {
             string userInput;
 

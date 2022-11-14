@@ -6,7 +6,7 @@ namespace forum2022
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Menu.InitMenu();
         }
     }
 }
