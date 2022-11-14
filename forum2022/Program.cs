@@ -6,6 +6,7 @@ namespace forum2022
     {
         static void Main(string[] args)
         {
+            Auth.ShowCurrentUser();
             Menu.InitMenu();
         }
     }
