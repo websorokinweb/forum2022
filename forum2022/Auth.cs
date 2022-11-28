@@ -53,12 +53,18 @@ namespace forum2022
             else
             {
                 Console.WriteLine("FAIL! User with this username doesn't exist");
+                RegisterUser(data);
             }
         }
 
-        public static void RegisterUser()
+        public static void RegisterUser(User data)
         {
+            users.Add(data);
+            Console.WriteLine(users[0]);
+            Console.WriteLine(users[1]);
 
+            // Check if it save file
+            File.WriteAllText("test.json", JsonSerializer.Serialize(users));
         }
 
         public static void LogOutUser()
@@ -74,7 +80,7 @@ namespace forum2022
             GetAllUsers();
 
             User testLogin = new User();
-            testLogin.username = "clown";
+            testLogin.username = "clon";
             testLogin.password = "test";
             LoginUser(testLogin);
         }
