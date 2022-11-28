@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace forum2022
 {
-    struct User
+    public struct User
     {
         public string username { get; set; }
         public string password { get; set; }
@@ -18,19 +18,19 @@ namespace forum2022
         static User currentUser = new User();
         static List<User> users;
 
-        public static void SetCurrentUser()
+        public static void SetCurrentUser(User data)
         {
-            currentUser.username = "test";
-            currentUser.password = "pass";
+            currentUser.username = data.username;
+            currentUser.password = data.password;
         }
 
-        public static void ShowCurrentUser()
+        public static void GetCurrentUser()
         {
             Console.WriteLine(currentUser.username);
             Console.WriteLine(currentUser.password);
         }
 
-        public static void ShowAllUsers()
+        public static void GetAllUsers()
         {
             if (File.Exists("test.json"))
                 using (StreamReader jsonFile = new StreamReader("test.json"))
@@ -40,6 +40,43 @@ namespace forum2022
                 }
             {
             }
+        }
+
+        public static void LoginUser(User data)
+        {
+            User needItem = users.Find(x => x.username == data.username);
+            if (needItem.username != null)
+            {
+                Console.WriteLine("User with this username exist");
+                SetCurrentUser(needItem);
+            }
+            else
+            {
+                Console.WriteLine("FAIL! User with this username doesn't exist");
+            }
+        }
+
+        public static void RegisterUser()
+        {
+
+        }
+
+        public static void LogOutUser()
+        {
+            currentUser.username = "";
+            currentUser.password = "";
+        }
+
+        public static void InitAuth()
+        {
+            Console.WriteLine("Auth module init");
+            GetCurrentUser();
+            GetAllUsers();
+
+            User testLogin = new User();
+            testLogin.username = "clown";
+            testLogin.password = "test";
+            LoginUser(testLogin);
         }
     }
 }
