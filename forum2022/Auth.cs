@@ -32,8 +32,8 @@ namespace forum2022
 
         public static void ShowAllUsers()
         {
-            if (File.Exists("test.json"))
-                using (StreamReader jsonFile = new StreamReader("test.json"))
+            if (File.Exists("~/db/test.json"))
+                using (StreamReader jsonFile = new StreamReader("~/db/test.json"))
                 {
                     string json = jsonFile.ReadToEnd();
                     users = JsonSerializer.Deserialize<List<User>>(json);
