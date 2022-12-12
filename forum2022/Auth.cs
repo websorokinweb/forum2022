@@ -15,6 +15,10 @@ namespace forum2022
 
     public class Auth
     {
+        // Db paths
+        static string usersDbPath = "db/users.json";
+
+
         static User currentUser = new User();
         static List<User> users;
 
@@ -32,9 +36,9 @@ namespace forum2022
 
         public static void GetAllUsers()
         {
-            if (File.Exists("db/users.json"))
+            if (File.Exists(usersDbPath))
             {
-                using (StreamReader jsonFile = new StreamReader("db/users.json"))
+                using (StreamReader jsonFile = new StreamReader(usersDbPath))
                 {
                     Console.WriteLine(jsonFile);
                     string json = jsonFile.ReadToEnd();
@@ -55,7 +59,7 @@ namespace forum2022
             else
             {
                 Console.WriteLine("FAIL! User with this username doesn't exist");
-                RegisterUser(data);
+                // RegisterUser(data);
             }
         }
 
@@ -66,7 +70,8 @@ namespace forum2022
             Console.WriteLine(users[1]);
 
             // Check if it save file
-            File.WriteAllText("test.json", JsonSerializer.Serialize(users));
+            File.WriteAllText(usersDbPath, JsonSerializer.Serialize(users));
+            Console.WriteLine("User successfully registered!");
         }
 
         public static void LogOutUser()
@@ -82,9 +87,11 @@ namespace forum2022
             GetAllUsers();
 
             User testLogin = new User();
-            testLogin.username = "clown";
+            testLogin.username = "test";
             testLogin.password = "test";
             LoginUser(testLogin);
+
+            RegisterUser(testLogin);
         }
     }
 }
