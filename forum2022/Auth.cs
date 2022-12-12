@@ -28,10 +28,11 @@ namespace forum2022
             currentUser.password = data.password;
         }
 
-        public static void GetCurrentUser()
+        public static User GetCurrentUser()
         {
             Console.WriteLine(currentUser.username);
             Console.WriteLine(currentUser.password);
+            return currentUser;
         }
 
         public static void GetAllUsers()
@@ -48,13 +49,19 @@ namespace forum2022
 
         }
 
-        public static void LoginUser(User data)
+        public static bool CheckIfUserExist(User data)
         {
             User needItem = users.Find(x => x.username == data.username);
-            if (needItem.username != null)
+            return needItem.username != null;
+        }
+
+        public static void LoginUser(User data)
+        {
+            bool userInDb = CheckIfUserExist(data);
+            if (userInDb)
             {
-                Console.WriteLine("User with this username exist");
-                SetCurrentUser(needItem);
+                Console.WriteLine("Successfully logged!");
+                SetCurrentUser(data);
             }
             else
             {
@@ -65,13 +72,21 @@ namespace forum2022
 
         public static void RegisterUser(User data)
         {
-            users.Add(data);
-            Console.WriteLine(users[0]);
-            Console.WriteLine(users[1]);
+            bool userInDb = CheckIfUserExist(data);
+            if (userInDb)
+            {
+                Console.WriteLine("User already registered!");
+            }
+            else
+            {
+                users.Add(data);
 
-            // Check if it save file
-            File.WriteAllText(usersDbPath, JsonSerializer.Serialize(users));
-            Console.WriteLine("User successfully registered!");
+                // Saving file
+                File.WriteAllText(usersDbPath, JsonSerializer.Serialize(users));
+                Console.WriteLine("User successfully registered!");
+            }
+               
+
         }
 
         public static void LogOutUser()
@@ -87,7 +102,7 @@ namespace forum2022
             GetAllUsers();
 
             User testLogin = new User();
-            testLogin.username = "test";
+            testLogin.username = "eeee";
             testLogin.password = "test";
             LoginUser(testLogin);
 
