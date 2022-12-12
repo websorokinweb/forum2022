@@ -22,9 +22,9 @@ namespace forum2022
 //}
 
 // Bin\debug\app\here
-//[
-//    {
-//        "username": "clown",
-//       "password": "test"
-//    }
-//]
+/*[
+    {
+        "username": "clown",
+       "password": "test"
+    }
+]*/

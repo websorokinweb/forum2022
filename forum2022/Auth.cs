@@ -32,14 +32,21 @@ namespace forum2022
 
         public static void GetAllUsers()
         {
-            if (File.Exists("~/db/test.json"))
-                using (StreamReader jsonFile = new StreamReader("~/db/test.json"))
-                {
-                    string json = jsonFile.ReadToEnd();
-                    users = JsonSerializer.Deserialize<List<User>>(json);
-                }
+            string test = System.IO.Directory.GetCurrentDirectory();
+
+            string startupPath = Environment.CurrentDirectory;
+            string testLol = Environment.CurrentDirectory;
+
+            Console.WriteLine(startupPath);
+            Console.WriteLine(new FileInfo(startupPath).DirectoryName);
+
+            // if (File.Exists("~/db/test.json"))
+            /*using (StreamReader jsonFile = new StreamReader("~/db/test.json"))
             {
-            }
+                string json = jsonFile.ReadToEnd();
+                users = JsonSerializer.Deserialize<List<User>>(json);
+            }*/
+            //}
         }
 
         public static void LoginUser(User data)
