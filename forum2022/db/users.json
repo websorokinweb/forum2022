@@ -1,6 +1,11 @@
 [
     {
         "username": "clown",
-        "password": "test"
+        "password": "test",
+        "name": "name",
+        "surname": "surname",
+        "birthDate": "birthDate",
+        "gender": "male",
+        "hobby": [ "siatkówka", "czytać książki", "oglądać filmy" ]
     }
 ]
