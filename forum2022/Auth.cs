@@ -11,6 +11,11 @@ namespace forum2022
     {
         public string username { get; set; }
         public string password { get; set; }
+        public string name { get; set; }
+        public string surname { get; set; }
+        public string birthDate { get; set; }
+        public string gender { get; set; }
+        public List<string> hobby { get; set; }
     }
 
     public class Auth
@@ -26,6 +31,31 @@ namespace forum2022
         {
             currentUser.username = data.username;
             currentUser.password = data.password;
+
+            if(data.name != null)
+            {
+                currentUser.name = data.name;
+            }
+            if (data.name != null)
+            {
+                currentUser.name = data.name;
+            }
+            if (data.surname != null)
+            {
+                currentUser.surname = data.surname;
+            }
+            if (data.birthDate != null)
+            {
+                currentUser.birthDate = data.birthDate;
+            }
+            if (data.gender != null)
+            {
+                currentUser.gender = data.gender;
+            }
+            if (data.hobby != null)
+            {
+                currentUser.hobby = data.hobby;
+            }
         }
 
         public static User GetCurrentUser()
@@ -60,8 +90,9 @@ namespace forum2022
             bool userInDb = CheckIfUserExist(data);
             if (userInDb)
             {
+                User needItem = users.Find(x => x.username == data.username);
                 Console.WriteLine("Successfully logged!");
-                SetCurrentUser(data);
+                SetCurrentUser(needItem);
             }
             else
             {
@@ -95,6 +126,18 @@ namespace forum2022
             currentUser.password = "";
         }
 
+        public static void ShowProfile()
+        {
+            Console.WriteLine("=====");
+            Console.WriteLine(currentUser.name + ' ' + currentUser.surname);
+            Console.WriteLine("@" + currentUser.username);
+            Console.WriteLine("Born: " + currentUser.birthDate);
+            Console.WriteLine("Płeć: " + currentUser.gender);
+            Console.WriteLine(currentUser.hobby);
+            Console.WriteLine("=====");
+
+        }
+
         public static void InitAuth()
         {
             Console.WriteLine("Auth module init");
@@ -102,11 +145,12 @@ namespace forum2022
             GetAllUsers();
 
             User testLogin = new User();
-            testLogin.username = "eeee";
+            testLogin.username = "clown";
             testLogin.password = "test";
             LoginUser(testLogin);
 
             RegisterUser(testLogin);
+            ShowProfile();
         }
     }
 }
