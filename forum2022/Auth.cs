@@ -79,31 +79,37 @@ namespace forum2022
 
         }
 
-        public static bool CheckIfUserExist(User data)
+        public static bool CheckIfUserExist(string username)
         {
-            User needItem = users.Find(x => x.username == data.username);
+            User needItem = users.Find(x => x.username == username);
             return needItem.username != null;
         }
 
-        public static void LoginUser(User data)
+        public static bool LoginUser(User data)
         {
-            bool userInDb = CheckIfUserExist(data);
+            bool userInDb = CheckIfUserExist(data.username);
             if (userInDb)
             {
                 User needItem = users.Find(x => x.username == data.username);
-                Console.WriteLine("Successfully logged!");
-                SetCurrentUser(needItem);
+                if(needItem.password == data.password){
+                    Console.WriteLine("Sukces!");
+                    SetCurrentUser(needItem);
+                    return true;
+                }else{
+                    Console.WriteLine("Nieprawidlowe hasło lub login.");
+                }
             }
             else
             {
                 Console.WriteLine("FAIL! User with this username doesn't exist");
                 // RegisterUser(data);
             }
+            return false;
         }
 
         public static void RegisterUser(User data)
         {
-            bool userInDb = CheckIfUserExist(data);
+            bool userInDb = CheckIfUserExist(data.username);
             if (userInDb)
             {
                 Console.WriteLine("User already registered!");
@@ -157,10 +163,26 @@ namespace forum2022
 
         // Validate
         public static bool validateLogin(string userInput){
-            return false;
+            if(CheckIfUserExist(userInput)){
+                return true;
+            }else{
+                Console.WriteLine("Użytkownika z takim loginem nie istnieje.");
+                return false;
+            }
+        }
+
+        public static bool validatePassword(string userInput){
+            userToCheck.password = userInput;
+            if(LoginUser(userToCheck)){
+                return true;
+            }else{
+                return false;
+            }
         }
 
         // Screens
+
+        static User userToCheck = new User();
 
         public static void PickLoginOrRegister(){
             Menu.setAdditionalMenuMessage("Zaloguj lub zarejestruj się:");
@@ -170,7 +192,8 @@ namespace forum2022
 
         public static void LoginScreen(){
             Console.WriteLine("Logowanie:");
-            Helpers.SaveUserStr("Login:", true, validateLogin);
+            userToCheck.username = Helpers.SaveUserStr("Login:", true, validateLogin);
+            userToCheck.password = Helpers.SaveUserStr("Hasło:", true, validatePassword);
         }
 
         public static void RegisterScreen(){
