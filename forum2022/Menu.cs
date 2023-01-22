@@ -34,14 +34,14 @@ namespace forum2022
         static int currentMenuOption = 0;
 
         public static void SetMenuOptions(){
-            // List<MenuOption> currentMenuOptions = new List<MenuOption>(){
-            //     new MenuOption(){title = "Get all users", onChooseFunc = "GetAllUsers"},
-            //     new MenuOption(){title = "Get current user", onChooseFunc = "GetCurrentUser"}
-            // };
-            // for (int i = 0; i < currentMenuOptions.Count; i++) 
-            // {
-            //   Console.WriteLine(currentMenuOptions[i].title);
-            // }
+            
+        }
+
+        public static void SetCategoryMenuOptions(string screen){
+            switch(screen){
+                case "auth":
+                    break;
+            }
         }
 
         public static void ShowMenuOptions(){
