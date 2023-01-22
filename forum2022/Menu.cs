@@ -67,15 +67,20 @@ namespace forum2022
                     case ConsoleKey.UpArrow:
                         if(currentMenuOption > 0){
                             currentMenuOption--;
+                        }else{
+                            currentMenuOption = currentMenuOptions.Count - 1;
                         }
                         break;
                     case ConsoleKey.DownArrow:
                         if(currentMenuOption < currentMenuOptions.Count - 1){
                             currentMenuOption++;
+                        }else{
+                            currentMenuOption = 0;
                         }
                         break;
                     case ConsoleKey.Enter:
-                        Console.WriteLine(currentMenuOptions[currentMenuOption].title);
+                        Console.Clear();
+                        CallFunctionByName(currentMenuOptions[currentMenuOption].onChooseFunc);
                         isListening = false;
                         break;
                     case ConsoleKey.Escape:
