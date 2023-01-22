@@ -151,6 +151,24 @@ namespace forum2022
 
             RegisterUser(testLogin);
             ShowProfile();
+
+            PickLoginOrRegister();
+        }
+
+        // Screens
+
+        public static void PickLoginOrRegister(){
+            Menu.setAdditionalMenuMessage("Zaloguj lub zarejestruj się:");
+            Menu.SetCategoryMenuOptions("PickLoginOrRegister");
+            Menu.InitMenu();
+        }
+
+        public static void LoginScreen(){
+            Console.WriteLine("LoginScreen");
+        }
+
+        public static void RegisterScreen(){
+            Console.WriteLine("RegisterScreen");
         }
     }
 }

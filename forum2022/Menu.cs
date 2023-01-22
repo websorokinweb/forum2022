@@ -14,6 +14,14 @@ namespace forum2022
     {
         public static void CallFunctionByName(string funcName){
             switch(funcName){
+                // Auth screens
+                case "LoginScreen":
+                    Auth.LoginScreen();
+                    break;
+                case "RegisterScreen":
+                    Auth.RegisterScreen();
+                    break;
+
                 case "GetAllUsers":
                     Auth.GetAllUsers();
                     break;
@@ -26,20 +34,31 @@ namespace forum2022
             }
         }
 
-        static List<MenuOption> currentMenuOptions = new List<MenuOption>(){
-                new MenuOption(){title = "Get all users", onChooseFunc = "GetAllUsers"},
-                new MenuOption(){title = "Get current user", onChooseFunc = "GetCurrentUser"},
-                new MenuOption(){title = "Show my profile", onChooseFunc = "ShowProfile"}
-            };
+        static List<MenuOption> currentMenuOptions = new List<MenuOption>();
+        // {
+                // new MenuOption(){title = "Get all users", onChooseFunc = "GetAllUsers"},
+                // new MenuOption(){title = "Get current user", onChooseFunc = "GetCurrentUser"},
+                // new MenuOption(){title = "Show my profile", onChooseFunc = "ShowProfile"}
+            // }
         static int currentMenuOption = 0;
+        static string additionalMenuMessage = "";
+
+        public static void setAdditionalMenuMessage(string message){
+            additionalMenuMessage = message;
+        }
 
         public static void SetMenuOptions(){
             
         }
 
         public static void SetCategoryMenuOptions(string screen){
+            currentMenuOptions = new List<MenuOption>();
             switch(screen){
-                case "auth":
+                case "PickLoginOrRegister":
+                    currentMenuOptions = new List<MenuOption>(){
+                        new MenuOption(){title = "Login", onChooseFunc = "LoginScreen"},
+                        new MenuOption(){title = "Register", onChooseFunc = "RegisterScreen"},
+                    };
                     break;
             }
         }
@@ -58,6 +77,10 @@ namespace forum2022
             while (isListening)
             {
                 Console.Clear();
+
+                if(additionalMenuMessage != ""){
+                    Console.WriteLine(additionalMenuMessage);
+                }
 
                 Console.WriteLine("Choose option using up/down keys. Enter for submit");
                 ShowMenuOptions();
@@ -88,6 +111,8 @@ namespace forum2022
                         break;
                 }
             }
+
+            additionalMenuMessage = "";
 
             Console.CursorVisible = true;
         }
