@@ -8,6 +8,7 @@ namespace forum2022
         {
             Auth.InitAuth();
             Menu.InitMenu();
+            // Menu.SetMenuOptions();
         }
     }
 }

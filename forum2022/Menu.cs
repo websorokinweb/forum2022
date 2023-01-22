@@ -4,43 +4,87 @@ using System.Text;
 
 namespace forum2022
 {
+
+    public struct MenuOption{
+        public string title { get; set; }
+        public string onChooseFunc { get; set; }
+    }
+
     public class Menu
     {
-        public static bool isListening = true;
+        public static void CallFunctionByName(string funcName){
+            switch(funcName){
+                case "GetAllUsers":
+                    Auth.GetAllUsers();
+                    break;
+                case "GetCurrentUser":
+                    Auth.GetCurrentUser();
+                    break;
+                case "ShowProfile":
+                    Auth.ShowProfile();
+                    break;
+            }
+        }
+
+        static List<MenuOption> currentMenuOptions = new List<MenuOption>(){
+                new MenuOption(){title = "Get all users", onChooseFunc = "GetAllUsers"},
+                new MenuOption(){title = "Get current user", onChooseFunc = "GetCurrentUser"},
+                new MenuOption(){title = "Show my profile", onChooseFunc = "ShowProfile"}
+            };
+        static int currentMenuOption = 0;
+
+        public static void SetMenuOptions(){
+            // List<MenuOption> currentMenuOptions = new List<MenuOption>(){
+            //     new MenuOption(){title = "Get all users", onChooseFunc = "GetAllUsers"},
+            //     new MenuOption(){title = "Get current user", onChooseFunc = "GetCurrentUser"}
+            // };
+            // for (int i = 0; i < currentMenuOptions.Count; i++) 
+            // {
+            //   Console.WriteLine(currentMenuOptions[i].title);
+            // }
+        }
+
+        public static void ShowMenuOptions(){
+            for (int i = 0; i < currentMenuOptions.Count; i++) 
+            {
+              Console.WriteLine((currentMenuOption == i ? "- " : "  ") + currentMenuOptions[i].title);
+            }
+        }
 
         public static void InitMenu()
         {
-            Console.WriteLine("Menu inited");
+            Console.CursorVisible = false;
+            bool isListening = true;
             while (isListening)
             {
-                int operationType;
+                Console.Clear();
 
-                operationType = Helpers.SaveUserInt("Wpisz liczbę", "Nieprawidlowa liczba");
-
-                switch (operationType)
-                {
-                    case 0:
+                Console.WriteLine("Choose option using up/down keys. Enter for submit");
+                ShowMenuOptions();
+                
+                ConsoleKeyInfo keyPressed = Console.ReadKey();
+                switch(keyPressed.Key){
+                    case ConsoleKey.UpArrow:
+                        if(currentMenuOption > 0){
+                            currentMenuOption--;
+                        }
+                        break;
+                    case ConsoleKey.DownArrow:
+                        if(currentMenuOption < currentMenuOptions.Count - 1){
+                            currentMenuOption++;
+                        }
+                        break;
+                    case ConsoleKey.Enter:
+                        Console.WriteLine(currentMenuOptions[currentMenuOption].title);
                         isListening = false;
                         break;
-
-                    case 1:
-                        
-                        break;
-
-                    case 2:
-                        break;
-
-                    case 3:
-                        break;
-
-                    case 4:
-                        break;
-
-                    default:
-                        Console.WriteLine("Nieprawidlowy typ operacji. Napisz liczbe od 1 do 4, lub 0 dla wyjścia");
+                    case ConsoleKey.Escape:
+                        isListening = false;
                         break;
                 }
             }
+
+            Console.CursorVisible = true;
         }
     }
 }
