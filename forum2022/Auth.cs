@@ -155,20 +155,26 @@ namespace forum2022
             PickLoginOrRegister();
         }
 
+        // Validate
+        public static bool validateLogin(string userInput){
+            return false;
+        }
+
         // Screens
 
         public static void PickLoginOrRegister(){
             Menu.setAdditionalMenuMessage("Zaloguj lub zarejestruj się:");
             Menu.SetCategoryMenuOptions("PickLoginOrRegister");
-            Menu.InitMenu();
+            Menu.ShowMenu();
         }
 
         public static void LoginScreen(){
-            Console.WriteLine("LoginScreen");
+            Console.WriteLine("Logowanie:");
+            Helpers.SaveUserStr("Login:", true, validateLogin);
         }
 
         public static void RegisterScreen(){
-            Console.WriteLine("RegisterScreen");
+            Console.WriteLine("Rejestracja:");
         }
     }
 }

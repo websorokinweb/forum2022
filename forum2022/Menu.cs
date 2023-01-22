@@ -70,9 +70,10 @@ namespace forum2022
             }
         }
 
-        public static void InitMenu()
+        public static void ShowMenu()
         {
             Console.CursorVisible = false;
+
             bool isListening = true;
             while (isListening)
             {
@@ -103,6 +104,7 @@ namespace forum2022
                         break;
                     case ConsoleKey.Enter:
                         Console.Clear();
+                        Console.CursorVisible = true;
                         CallFunctionByName(currentMenuOptions[currentMenuOption].onChooseFunc);
                         isListening = false;
                         break;
@@ -113,7 +115,6 @@ namespace forum2022
             }
 
             additionalMenuMessage = "";
-
             Console.CursorVisible = true;
         }
     }

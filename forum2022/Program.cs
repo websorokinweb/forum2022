@@ -7,7 +7,7 @@ namespace forum2022
         static void Main(string[] args)
         {
             Auth.InitAuth();
-            // Menu.InitMenu();
+            // Menu.ShowMenu();
             // Menu.SetMenuOptions();
         }
     }
