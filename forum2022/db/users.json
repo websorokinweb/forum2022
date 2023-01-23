@@ -1,1 +1,22 @@
-[{"username":"clown","password":"test","name":"name","surname":"surname","birthDate":"birthDate","gender":"male","hobby":["siatk\u00F3wka","czyta\u0107 ksi\u0105\u017Cki","ogl\u0105da\u0107 filmy"]},{"username":"admin","password":"admin","name":null,"surname":null,"birthDate":null,"gender":null,"hobby":null},{"username":"test","password":"test","name":null,"surname":null,"birthDate":null,"gender":null,"hobby":null},{"username":"asd","password":"asd","name":null,"surname":null,"birthDate":null,"gender":null,"hobby":null},{"username":"pop","password":"pop","name":null,"surname":null,"birthDate":null,"gender":null,"hobby":null}]
+[
+  {
+    "username":"clown",
+    "password":"test",
+    "admin": false,
+    "name":"name",
+    "surname":"surname",
+    "birthDate":"birthDate",
+    "gender":"male",
+    "hobby":["siatk\u00F3wka","czyta\u0107 ksi\u0105\u017Cki","ogl\u0105da\u0107 filmy"]
+  },
+  {
+    "username":"admin",
+    "password":"admin",
+    "admin": true,
+    "name":"",
+    "surname":"",
+    "birthDate":"",
+    "gender":"",
+    "hobby":[]
+  }
+]

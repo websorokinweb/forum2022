@@ -11,6 +11,7 @@ namespace forum2022
     {
         public string username { get; set; }
         public string password { get; set; }
+        public bool admin { get; set; }
         public string name { get; set; }
         public string surname { get; set; }
         public string birthDate { get; set; }
@@ -31,11 +32,8 @@ namespace forum2022
         {
             currentUser.username = data.username;
             currentUser.password = data.password;
+            currentUser.admin = data.admin;
 
-            if(data.name != null)
-            {
-                currentUser.name = data.name;
-            }
             if (data.name != null)
             {
                 currentUser.name = data.name;
@@ -140,6 +138,12 @@ namespace forum2022
             Console.WriteLine("Born: " + currentUser.birthDate);
             Console.WriteLine("Płeć: " + currentUser.gender);
             Console.WriteLine(currentUser.hobby);
+            if(currentUser.admin){
+                Console.WriteLine("");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Jesteś adminem!");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
             Console.WriteLine("=====");
 
         }
