@@ -142,15 +142,15 @@ namespace forum2022
                 Console.WriteLine("");
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("Jesteś adminem!");
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Gray;
             }
             Console.WriteLine("=====");
 
+            Menu.BackMenu(LoggedMenuScreen);
         }
 
         public static void InitAuth()
         {
-            Console.WriteLine("Auth module init");
             GetCurrentUser();
             GetAllUsers();
 
@@ -222,14 +222,18 @@ namespace forum2022
             Menu.ShowMenu();
         }
 
+        public static void LoggedMenuScreen(){
+            Menu.SetCategoryMenuOptions("Logged");
+            Menu.ShowMenu();
+        }
+
         public static void LoginScreen(){
             userToCheck = new User();
             Console.WriteLine("Logowanie:");
             userToCheck.username = Helpers.SaveUserStr("Login:", validateLogin);
             userToCheck.password = Helpers.SaveUserStr("Hasło:", validatePassword);
 
-            Menu.SetCategoryMenuOptions("Logged");
-            Menu.ShowMenu();
+            LoggedMenuScreen();
         }
 
         public static void RegisterScreen(){
@@ -238,8 +242,7 @@ namespace forum2022
             userToCheck.username = Helpers.SaveUserStr("Login:", validateRegisterLogin);
             userToCheck.password = Helpers.SaveUserStr("Hasło:", validateRegisterPassword);
 
-            Menu.SetCategoryMenuOptions("Logged");
-            Menu.ShowMenu();
+            LoggedMenuScreen();
         }
     }
 }

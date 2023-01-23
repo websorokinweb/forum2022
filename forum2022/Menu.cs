@@ -128,5 +128,24 @@ namespace forum2022
             additionalMenuMessage = "";
             Console.CursorVisible = true;
         }
+
+        public static void BackMenu(Action doAfterEscape){
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("");
+            Console.WriteLine("Nacisnij Esc żeby wrócić do poprzedniego menu.");
+
+            Console.CursorVisible = false;
+            bool isListening = true;
+            while (isListening){
+                ConsoleKeyInfo keyPressed = Console.ReadKey();
+                switch(keyPressed.Key){
+                    case ConsoleKey.Escape:
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        doAfterEscape();
+                        isListening = false;
+                        break;
+                }
+            }
+        }
     }
 }
