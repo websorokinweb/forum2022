@@ -31,6 +31,9 @@ namespace forum2022
                 case "ShowProfile":
                     Auth.ShowProfile();
                     break;
+                case "LogOutUser":
+                    Auth.LogOutUser();
+                    break;
             }
         }
 
@@ -63,7 +66,7 @@ namespace forum2022
                 case "Logged":
                     currentMenuOptions = new List<MenuOption>(){
                         new MenuOption(){title = "Show My Profile", onChooseFunc = "ShowProfile"},
-                        new MenuOption(){title = "Show Profile", onChooseFunc = "ShowProfile"},
+                        new MenuOption(){title = "Wyloguj", onChooseFunc = "LogOutUser"},
                     };
                     break;
             }
@@ -79,6 +82,7 @@ namespace forum2022
         public static void ShowMenu(bool clearPreviosMessages = true)
         {
             Console.CursorVisible = false;
+            currentMenuOption = 0;
 
             bool isListening = true;
             while (isListening)
@@ -121,7 +125,6 @@ namespace forum2022
                         break;
                 }
             }
-
             additionalMenuMessage = "";
             Console.CursorVisible = true;
         }

@@ -126,8 +126,8 @@ namespace forum2022
 
         public static void LogOutUser()
         {
-            currentUser.username = "";
-            currentUser.password = "";
+            currentUser = new User();
+            PickLoginOrRegister();
         }
 
         public static void ShowProfile()
