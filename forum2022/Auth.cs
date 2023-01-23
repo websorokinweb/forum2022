@@ -233,6 +233,7 @@ namespace forum2022
         }
 
         public static void LoggedMenuScreen(){
+            Menu.setAdditionalMenuMessage("Menu:");
             Menu.SetCategoryMenuOptions("Logged");
             Menu.ShowMenu();
         }

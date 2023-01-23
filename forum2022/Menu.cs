@@ -113,7 +113,7 @@ namespace forum2022
                     Console.WriteLine(additionalMenuMessage);
                 }
 
-                Console.WriteLine("Choose option using up/down keys. Enter for submit");
+                Console.WriteLine("Wybierz opcję strzałkami w górę/w dół. Enter dla submitu");
                 ShowMenuOptions();
                 
                 ConsoleKeyInfo keyPressed = Console.ReadKey();
@@ -135,6 +135,7 @@ namespace forum2022
                     case ConsoleKey.Enter:
                         Console.Clear();
                         Console.CursorVisible = true;
+                        additionalMenuMessage = "";
                         CallFunctionByName(currentMenuOptions[currentMenuOption].onChooseFunc);
                         isListening = false;
                         break;
@@ -143,7 +144,6 @@ namespace forum2022
                         break;
                 }
             }
-            additionalMenuMessage = "";
             Console.CursorVisible = true;
         }
 
