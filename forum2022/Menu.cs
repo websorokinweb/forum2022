@@ -26,9 +26,6 @@ namespace forum2022
                 case "GetAllUsers":
                     Auth.GetAllUsers();
                     break;
-                case "GetCurrentUser":
-                    Auth.GetCurrentUser();
-                    break;
 
                 // Logged actions
                 case "ShowProfile":

@@ -56,13 +56,6 @@ namespace forum2022
             }
         }
 
-        public static User GetCurrentUser()
-        {
-            Console.WriteLine(currentUser.username);
-            Console.WriteLine(currentUser.password);
-            return currentUser;
-        }
-
         public static void GetAllUsers()
         {
             if (File.Exists(usersDbPath))
@@ -150,7 +143,6 @@ namespace forum2022
 
         public static void InitAuth()
         {
-            GetCurrentUser();
             GetAllUsers();
 
             // User testLogin = new User();
