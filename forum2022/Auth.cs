@@ -167,6 +167,11 @@ namespace forum2022
         // Setters
 
         public static void setGender(string gender){
+            if(gender == "male"){
+                gender = "Mężczyzna";
+            }else if(gender == "female"){
+                gender = "Kobieta";
+            }
             int needUserIndex = users.FindIndex(item => item.username == currentUser.username);
             User needUser = users[needUserIndex];
             needUser.gender = gender;
