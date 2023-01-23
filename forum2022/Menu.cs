@@ -76,14 +76,16 @@ namespace forum2022
             }
         }
 
-        public static void ShowMenu()
+        public static void ShowMenu(bool clearPreviosMessages = true)
         {
             Console.CursorVisible = false;
 
             bool isListening = true;
             while (isListening)
             {
-                Console.Clear();
+                if(clearPreviosMessages){
+                    Console.Clear();
+                }
 
                 if (additionalMenuMessage != ""){
                     Console.WriteLine(additionalMenuMessage);

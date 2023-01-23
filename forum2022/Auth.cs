@@ -150,13 +150,13 @@ namespace forum2022
             GetCurrentUser();
             GetAllUsers();
 
-            User testLogin = new User();
-            testLogin.username = "clown";
-            testLogin.password = "test";
-            LoginUser(testLogin);
+            // User testLogin = new User();
+            // testLogin.username = "clown";
+            // testLogin.password = "test";
+            // LoginUser(testLogin);
 
-            RegisterUser(testLogin);
-            ShowProfile();
+            // RegisterUser(testLogin);
+            // ShowProfile();
 
             PickLoginOrRegister();
         }
@@ -170,7 +170,6 @@ namespace forum2022
                 return false;
             }
         }
-
 
         public static bool validatePassword(string userInput){
             userToCheck.password = userInput;
@@ -200,6 +199,7 @@ namespace forum2022
             if (RegisterUser(userToCheck))
             {
                 Console.WriteLine("Sukces! Użytkownik jest zarejestorowany!");
+                LoginUser(userToCheck);
                 return true;
             }
             else
@@ -233,6 +233,9 @@ namespace forum2022
             Console.WriteLine("Rejestracja:");
             userToCheck.username = Helpers.SaveUserStr("Login:", validateRegisterLogin);
             userToCheck.password = Helpers.SaveUserStr("Hasło:", validateRegisterPassword);
+
+            Menu.SetCategoryMenuOptions("Logged");
+            Menu.ShowMenu();
         }
     }
 }
