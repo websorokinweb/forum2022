@@ -22,17 +22,31 @@ namespace forum2022
                     Auth.RegisterScreen();
                     break;
 
+                // Others
                 case "GetAllUsers":
                     Auth.GetAllUsers();
                     break;
                 case "GetCurrentUser":
                     Auth.GetCurrentUser();
                     break;
+
+                // Logged actions
                 case "ShowProfile":
                     Auth.ShowProfile();
                     break;
+                case "GenderPickerScreen":
+                    Auth.GenderPickerScreen();
+                    break;
                 case "LogOutUser":
                     Auth.LogOutUser();
+                    break;
+
+                // Edit profile
+                case "setGenderMale":
+                    Auth.setGender("male");
+                    break;
+                case "setGenderFemale":
+                    Auth.setGender("female");
                     break;
             }
         }
@@ -66,7 +80,14 @@ namespace forum2022
                 case "Logged":
                     currentMenuOptions = new List<MenuOption>(){
                         new MenuOption(){title = "Show My Profile", onChooseFunc = "ShowProfile"},
+                        new MenuOption(){title = "Edytuj płeć", onChooseFunc = "GenderPickerScreen"},
                         new MenuOption(){title = "Wyloguj", onChooseFunc = "LogOutUser"},
+                    };
+                    break;
+                case "GenderPicker":
+                    currentMenuOptions = new List<MenuOption>(){
+                        new MenuOption(){title = "Mężczyzna", onChooseFunc = "setGenderMale"},
+                        new MenuOption(){title = "Kobieta", onChooseFunc = "setGenderFemale"},
                     };
                     break;
             }
@@ -132,7 +153,7 @@ namespace forum2022
         public static void BackMenu(Action doAfterEscape){
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("");
-            Console.WriteLine("Nacisnij Esc żeby wrócić do poprzedniego menu.");
+            Console.WriteLine("Nacisnij Esc żeby wrócić do głównego menu.");
 
             Console.CursorVisible = false;
             bool isListening = true;

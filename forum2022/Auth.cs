@@ -69,7 +69,6 @@ namespace forum2022
             {
                 using (StreamReader jsonFile = new StreamReader(usersDbPath))
                 {
-                    Console.WriteLine(jsonFile);
                     string json = jsonFile.ReadToEnd();
                     users = JsonSerializer.Deserialize<List<User>>(json);
                 }
@@ -165,6 +164,20 @@ namespace forum2022
             PickLoginOrRegister();
         }
 
+        // Setters
+
+        public static void setGender(string gender){
+            int needUserIndex = users.FindIndex(item => item.username == currentUser.username);
+            User needUser = users[needUserIndex];
+            needUser.gender = gender;
+            users[needUserIndex] = needUser;
+            File.WriteAllText(usersDbPath, JsonSerializer.Serialize(users));
+
+            GetAllUsers();
+            SetCurrentUser(needUser);
+            Console.WriteLine("Sukces! Obrana płeć - " + needUser.gender);
+        }
+
         // Validate
         public static bool validateLogin(string userInput){
             if(CheckIfUserExist(userInput)){
@@ -243,6 +256,13 @@ namespace forum2022
             userToCheck.password = Helpers.SaveUserStr("Hasło:", validateRegisterPassword);
 
             LoggedMenuScreen();
+        }
+
+        public static void GenderPickerScreen(){
+            Menu.SetCategoryMenuOptions("GenderPicker");
+            Menu.ShowMenu();
+
+            Menu.BackMenu(LoggedMenuScreen);
         }
     }
 }
