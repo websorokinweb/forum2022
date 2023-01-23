@@ -39,20 +39,17 @@ namespace forum2022
             return correctUserInput;
         }
 
-        public static string SaveUserStr(string message, bool needValidation, Func<string, bool> validateString)
+        public static string SaveUserStr(string message, Func<string, bool> validateString)
         {
             string userInput;
 
             while(true){
                 Console.Write(message + " ");
                 userInput = Console.ReadLine();
-                if(needValidation){
-                    if(validateString(userInput)){
-                        return userInput;
-                    }
-                }else{
+                if(validateString(userInput)){
                     return userInput;
                 }
+
             }
         }
     }

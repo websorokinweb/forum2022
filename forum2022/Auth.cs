@@ -107,20 +107,20 @@ namespace forum2022
             return false;
         }
 
-        public static void RegisterUser(User data)
+        public static bool RegisterUser(User data)
         {
             bool userInDb = CheckIfUserExist(data.username);
             if (userInDb)
             {
                 Console.WriteLine("User already registered!");
+                return false;
             }
             else
             {
                 users.Add(data);
-
                 // Saving file
                 File.WriteAllText(usersDbPath, JsonSerializer.Serialize(users));
-                Console.WriteLine("User successfully registered!");
+                return true;
             }
                
 
@@ -171,11 +171,39 @@ namespace forum2022
             }
         }
 
+
         public static bool validatePassword(string userInput){
             userToCheck.password = userInput;
             if(LoginUser(userToCheck)){
                 return true;
             }else{
+                return false;
+            }
+        }
+
+        public static bool validateRegisterLogin(string userInput)
+        {
+            if (CheckIfUserExist(userInput))
+            {
+                Console.WriteLine("Użytkownik z takim loginem już istnieje.");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public static bool validateRegisterPassword(string userInput)
+        {
+            userToCheck.password = userInput;
+            if (RegisterUser(userToCheck))
+            {
+                Console.WriteLine("Sukces! Użytkownik jest zarejestorowany!");
+                return true;
+            }
+            else
+            {
                 return false;
             }
         }
@@ -191,13 +219,17 @@ namespace forum2022
         }
 
         public static void LoginScreen(){
+            userToCheck = new User();
             Console.WriteLine("Logowanie:");
-            userToCheck.username = Helpers.SaveUserStr("Login:", true, validateLogin);
-            userToCheck.password = Helpers.SaveUserStr("Hasło:", true, validatePassword);
+            userToCheck.username = Helpers.SaveUserStr("Login:", validateLogin);
+            userToCheck.password = Helpers.SaveUserStr("Hasło:", validatePassword);
         }
 
         public static void RegisterScreen(){
+            userToCheck = new User();
             Console.WriteLine("Rejestracja:");
+            userToCheck.username = Helpers.SaveUserStr("Login:", validateRegisterLogin);
+            userToCheck.password = Helpers.SaveUserStr("Hasło:", validateRegisterPassword);
         }
     }
 }
