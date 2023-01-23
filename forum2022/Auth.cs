@@ -223,6 +223,9 @@ namespace forum2022
             Console.WriteLine("Logowanie:");
             userToCheck.username = Helpers.SaveUserStr("Login:", validateLogin);
             userToCheck.password = Helpers.SaveUserStr("Hasło:", validatePassword);
+
+            Menu.SetCategoryMenuOptions("Logged");
+            Menu.ShowMenu();
         }
 
         public static void RegisterScreen(){

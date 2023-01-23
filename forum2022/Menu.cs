@@ -60,6 +60,12 @@ namespace forum2022
                         new MenuOption(){title = "Register", onChooseFunc = "RegisterScreen"},
                     };
                     break;
+                case "Logged":
+                    currentMenuOptions = new List<MenuOption>(){
+                        new MenuOption(){title = "Show My Profile", onChooseFunc = "ShowProfile"},
+                        new MenuOption(){title = "Show Profile", onChooseFunc = "ShowProfile"},
+                    };
+                    break;
             }
         }
 
@@ -79,7 +85,7 @@ namespace forum2022
             {
                 Console.Clear();
 
-                if(additionalMenuMessage != ""){
+                if (additionalMenuMessage != ""){
                     Console.WriteLine(additionalMenuMessage);
                 }
 
