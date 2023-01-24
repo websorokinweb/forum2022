@@ -20,20 +20,6 @@ namespace forum2022
 
         static List<Post> posts = new List<Post>();
 
-        public static void DisplayPost(Post post){
-            Console.WriteLine("");
-            Console.WriteLine(post.title);
-            Console.WriteLine(post.text);
-            Console.WriteLine("@" + post.author);
-            Console.WriteLine("");
-        }
-
-        public static void ShowFeed(){
-            for (int i = 0; i < posts.Count; i++){
-                DisplayPost(posts[i]);
-            }
-        }
-
         public static void LoadPosts(){
             if (File.Exists(feedDbPath))
             {
@@ -41,6 +27,24 @@ namespace forum2022
                 {
                     string json = jsonFile.ReadToEnd();
                     posts = JsonSerializer.Deserialize<List<Post>>(json);
+                }
+            }
+        }
+
+        public static void DisplayPost(Post post){
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(post.title);
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine(post.text);
+            Console.WriteLine("@" + post.author);
+        }
+
+        public static void ShowFeed(){
+            Console.WriteLine("");
+            for (int i = 0; i < posts.Count; i++){
+                DisplayPost(posts[i]);
+                if(i < posts.Count - 1){
+                    Console.WriteLine("");
                 }
             }
         }
@@ -92,6 +96,13 @@ namespace forum2022
             postTitle = Helpers.SaveUserStr("Tytuł:", validatePostTitle);
             postText = Helpers.SaveUserStr("Tekst:", validatePostText);
             AddPost(postTitle, postText);
+
+            Menu.BackMenu(Auth.LoggedMenuScreen);
+        }
+
+        public static void ShowFeedScreen(){
+            LoadPosts();
+            ShowFeed();
 
             Menu.BackMenu(Auth.LoggedMenuScreen);
         }

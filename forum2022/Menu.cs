@@ -56,6 +56,9 @@ namespace forum2022
                 case "CreatePostScreen":
                     Forum.CreatePostScreen();
                     break;
+                case "ShowFeedScreen":
+                    Forum.ShowFeedScreen();
+                    break;
             }
         }
 
@@ -88,6 +91,7 @@ namespace forum2022
                 case "Logged":
                     currentMenuOptions = new List<MenuOption>(){
                         new MenuOption(){title = "Pokaż mój profil", onChooseFunc = "ShowProfile"},
+                        new MenuOption(){title = "Idź do feedu foruma", onChooseFunc = "ShowFeedScreen"},
                         new MenuOption(){title = "Dodaj post", onChooseFunc = "CreatePostScreen"},
                         new MenuOption(){title = "Edytuj imię i nazwisko", onChooseFunc = "NameSurnameEditScreen"},
                         new MenuOption(){title = "Edytuj płeć", onChooseFunc = "GenderPickerScreen"},
