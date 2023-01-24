@@ -7,7 +7,7 @@ namespace forum2022
     internal class Helpers
     {
         public static bool validateFalse(string userInput){
-            return false;
+            return true;
         }
         public static double SaveUserDouble(string message, string errorMessage)
         {

@@ -12,8 +12,7 @@ namespace forum2022
         public string username { get; set; }
         public string password { get; set; }
         public bool admin { get; set; }
-        public string name { get; set; }
-        public string surname { get; set; }
+        public string nameSurname { get; set; }
         public string birthDate { get; set; }
         public string gender { get; set; }
         public List<string> hobby { get; set; }
@@ -34,13 +33,9 @@ namespace forum2022
             currentUser.password = data.password;
             currentUser.admin = data.admin;
 
-            if (data.name != null)
+            if (data.nameSurname != null)
             {
-                currentUser.name = data.name;
-            }
-            if (data.surname != null)
-            {
-                currentUser.surname = data.surname;
+                currentUser.nameSurname = data.nameSurname;
             }
             if (data.birthDate != null)
             {
@@ -125,7 +120,7 @@ namespace forum2022
         public static void ShowProfile()
         {
             Console.WriteLine("=====");
-            Console.WriteLine(currentUser.name + ' ' + currentUser.surname);
+            Console.WriteLine(currentUser.nameSurname);
             Console.WriteLine("@" + currentUser.username);
             Console.WriteLine("Born: " + currentUser.birthDate);
             Console.WriteLine("Płeć: " + currentUser.gender);
@@ -175,6 +170,18 @@ namespace forum2022
             Console.WriteLine("Sukces! Obrana płeć - " + needUser.gender);
         }
 
+        public static void SetNameSurname(string nameSurname){
+            int needUserIndex = users.FindIndex(item => item.username == currentUser.username);
+            User needUser = users[needUserIndex];
+            needUser.nameSurname = nameSurname;
+            users[needUserIndex] = needUser;
+            File.WriteAllText(usersDbPath, JsonSerializer.Serialize(users));
+
+            GetAllUsers();
+            SetCurrentUser(needUser);
+            Console.WriteLine("Sukces! Imię i nazwisko zostało zmienione");
+        }
+
         // Validate
         public static bool validateLogin(string userInput){
             if(CheckIfUserExist(userInput)){
@@ -222,6 +229,15 @@ namespace forum2022
             }
         }
 
+        public static bool validateNameSurname(string userInput){
+            if(userInput.Length >= 3){
+                return true;
+            }else{
+                Console.WriteLine("Imię musi mieć minimum 3 symbole!");
+                return false;
+            }
+        }
+
         // Screens
 
         static User userToCheck = new User();
@@ -259,6 +275,14 @@ namespace forum2022
         public static void GenderPickerScreen(){
             Menu.SetCategoryMenuOptions("GenderPicker");
             Menu.ShowMenu();
+
+            Menu.BackMenu(LoggedMenuScreen);
+        }
+
+        public static void NameSurnameEditScreen(){
+            string newNameUsername;
+            newNameUsername = Helpers.SaveUserStr("Imię i nazwisko:", validateNameSurname);
+            SetNameSurname(newNameUsername);
 
             Menu.BackMenu(LoggedMenuScreen);
         }
