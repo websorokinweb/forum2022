@@ -251,25 +251,55 @@ namespace forum2022
         }
 
         public static bool validateBirthDateYear(string userInput){
+            string message = "Nieprawidlowy format zapisu. Wartość powinna być od 1940 do 2006";
+            int correctUserInput;
             if(userInput.Length == 4){
-                return true;
+                if(!int.TryParse(userInput, out correctUserInput)){
+                    Console.WriteLine(message);
+                    return false;
+                }
+                if(correctUserInput >= 1940 && correctUserInput <= 2006){
+                    return true;
+                }
             }
-            Console.WriteLine("Nieprawidlowy format zapisu. Wartość powinna być od 1940 do 2006");
+            Console.WriteLine(message);
             return false;
         }
         public static bool validateBirthDateMonth(string userInput){
+            int correctUserInput;
+            string message = "Nieprawidlowy format zapisu. Wartość powinna być od 01 do 12";
             if(userInput.Length == 2){
-                
-                return true;
+                if(!int.TryParse(userInput, out correctUserInput)){
+                    Console.WriteLine(message);
+                    return false;
+                }
+                if(correctUserInput >= 1 && correctUserInput <= 12){
+                    return true;
+                }
             }
-            Console.WriteLine("Nieprawidlowy format zapisu. Wartość powinna być od 01 do 12");
+            Console.WriteLine(message);
             return false;
         }
         public static bool validateBirthDateDay(string userInput){
+            int correctUserInput;
+            string message = "Nieprawidlowy format zapisu. Przykład - 09";
             if(userInput.Length == 2){
-                return true;
+                if(!int.TryParse(userInput, out correctUserInput)){
+                    Console.WriteLine(message);
+                    return false;
+                }
+                int intYear, intMonth;
+                int.TryParse(year, out intYear);
+                int.TryParse(month, out intMonth);
+                int maxDayInMonth = DateTime.DaysInMonth(intYear, intMonth);
+                Console.WriteLine(maxDayInMonth);
+                if(correctUserInput >= 1 && correctUserInput <= maxDayInMonth){
+                    return true;
+                }else{
+                    Console.WriteLine("Nieprawidlowa wartość. W " + month + "." + year + " było " + maxDayInMonth + " dni");
+                }
             }
-            Console.WriteLine("Nieprawidlowy format zapisu. Wartość powinna być od 01 do 12");
+            Console.WriteLine(message);
             return false;
         }
 
@@ -322,8 +352,11 @@ namespace forum2022
             Menu.BackMenu(LoggedMenuScreen);
         }
 
+        static string year, month, day;
         public static void DatePickerScreen(){
-            string year, month, day;
+            year = "";
+            month = "";
+            day = "";
             Console.WriteLine("Urodziny:");
             year = Helpers.SaveUserStr("Rok (1999):", validateBirthDateYear);
             month = Helpers.SaveUserStr("Miesiąc (09):", validateBirthDateMonth);
