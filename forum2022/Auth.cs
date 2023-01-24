@@ -122,7 +122,7 @@ namespace forum2022
             Console.WriteLine("=====");
             Console.WriteLine(currentUser.nameSurname);
             Console.WriteLine("@" + currentUser.username);
-            Console.WriteLine("Born: " + currentUser.birthDate);
+            Console.WriteLine("Urodziny: " + currentUser.birthDate);
             Console.WriteLine("Płeć: " + currentUser.gender);
             Console.WriteLine(currentUser.hobby);
             if(currentUser.admin){
@@ -153,6 +153,18 @@ namespace forum2022
 
         // Setters
 
+        public static void SetNameSurname(string nameSurname){
+            int needUserIndex = users.FindIndex(item => item.username == currentUser.username);
+            User needUser = users[needUserIndex];
+            needUser.nameSurname = nameSurname;
+            users[needUserIndex] = needUser;
+            File.WriteAllText(usersDbPath, JsonSerializer.Serialize(users));
+
+            GetAllUsers();
+            SetCurrentUser(needUser);
+            Console.WriteLine("Sukces! Imię i nazwisko zostało zmienione");
+        }
+
         public static void setGender(string gender){
             if(gender == "male"){
                 gender = "Mężczyzna";
@@ -170,16 +182,16 @@ namespace forum2022
             Console.WriteLine("Sukces! Obrana płeć - " + needUser.gender);
         }
 
-        public static void SetNameSurname(string nameSurname){
+        public static void SetBirthDate(string year, string month, string day){
             int needUserIndex = users.FindIndex(item => item.username == currentUser.username);
             User needUser = users[needUserIndex];
-            needUser.nameSurname = nameSurname;
+            needUser.birthDate = day + '.' + month + '.' + year;
             users[needUserIndex] = needUser;
             File.WriteAllText(usersDbPath, JsonSerializer.Serialize(users));
 
             GetAllUsers();
             SetCurrentUser(needUser);
-            Console.WriteLine("Sukces! Imię i nazwisko zostało zmienione");
+            Console.WriteLine("Sukces! Data urodzenia została zmieniona");
         }
 
         // Validate
@@ -238,6 +250,29 @@ namespace forum2022
             }
         }
 
+        public static bool validateBirthDateYear(string userInput){
+            if(userInput.Length == 4){
+                return true;
+            }
+            Console.WriteLine("Nieprawidlowy format zapisu. Wartość powinna być od 1940 do 2006");
+            return false;
+        }
+        public static bool validateBirthDateMonth(string userInput){
+            if(userInput.Length == 2){
+                
+                return true;
+            }
+            Console.WriteLine("Nieprawidlowy format zapisu. Wartość powinna być od 01 do 12");
+            return false;
+        }
+        public static bool validateBirthDateDay(string userInput){
+            if(userInput.Length == 2){
+                return true;
+            }
+            Console.WriteLine("Nieprawidlowy format zapisu. Wartość powinna być od 01 do 12");
+            return false;
+        }
+
         // Screens
 
         static User userToCheck = new User();
@@ -272,6 +307,14 @@ namespace forum2022
             LoggedMenuScreen();
         }
 
+        public static void NameSurnameEditScreen(){
+            string newNameUsername;
+            newNameUsername = Helpers.SaveUserStr("Imię i nazwisko:", validateNameSurname);
+            SetNameSurname(newNameUsername);
+
+            Menu.BackMenu(LoggedMenuScreen);
+        }
+
         public static void GenderPickerScreen(){
             Menu.SetCategoryMenuOptions("GenderPicker");
             Menu.ShowMenu();
@@ -279,10 +322,13 @@ namespace forum2022
             Menu.BackMenu(LoggedMenuScreen);
         }
 
-        public static void NameSurnameEditScreen(){
-            string newNameUsername;
-            newNameUsername = Helpers.SaveUserStr("Imię i nazwisko:", validateNameSurname);
-            SetNameSurname(newNameUsername);
+        public static void DatePickerScreen(){
+            string year, month, day;
+            Console.WriteLine("Urodziny:");
+            year = Helpers.SaveUserStr("Rok (1999):", validateBirthDateYear);
+            month = Helpers.SaveUserStr("Miesiąc (09):", validateBirthDateMonth);
+            day = Helpers.SaveUserStr("Dzień (09):", validateBirthDateDay);
+            SetBirthDate(year, month, day);
 
             Menu.BackMenu(LoggedMenuScreen);
         }

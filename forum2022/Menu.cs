@@ -39,14 +39,17 @@ namespace forum2022
                     break;
 
                 // Edit profile
+                case "NameSurnameEditScreen":
+                    Auth.NameSurnameEditScreen();
+                    break;
                 case "setGenderMale":
                     Auth.setGender("male");
                     break;
                 case "setGenderFemale":
                     Auth.setGender("female");
                     break;
-                case "NameSurnameEditScreen":
-                    Auth.NameSurnameEditScreen();
+                case "DatePickerScreen":
+                    Auth.DatePickerScreen();
                     break;
             }
         }
@@ -82,6 +85,7 @@ namespace forum2022
                         new MenuOption(){title = "Pokaż mój profil", onChooseFunc = "ShowProfile"},
                         new MenuOption(){title = "Edytuj imię i nazwisko", onChooseFunc = "NameSurnameEditScreen"},
                         new MenuOption(){title = "Edytuj płeć", onChooseFunc = "GenderPickerScreen"},
+                        new MenuOption(){title = "Edytuj datę urodzenia", onChooseFunc = "DatePickerScreen"},
                         new MenuOption(){title = "Wyloguj", onChooseFunc = "LogOutUser"},
                     };
                     break;
