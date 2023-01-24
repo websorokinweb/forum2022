@@ -51,6 +51,11 @@ namespace forum2022
                 case "DatePickerScreen":
                     Auth.DatePickerScreen();
                     break;
+
+                // Feed
+                case "CreatePostScreen":
+                    Forum.CreatePostScreen();
+                    break;
             }
         }
 
@@ -83,6 +88,7 @@ namespace forum2022
                 case "Logged":
                     currentMenuOptions = new List<MenuOption>(){
                         new MenuOption(){title = "Pokaż mój profil", onChooseFunc = "ShowProfile"},
+                        new MenuOption(){title = "Dodaj post", onChooseFunc = "CreatePostScreen"},
                         new MenuOption(){title = "Edytuj imię i nazwisko", onChooseFunc = "NameSurnameEditScreen"},
                         new MenuOption(){title = "Edytuj płeć", onChooseFunc = "GenderPickerScreen"},
                         new MenuOption(){title = "Edytuj datę urodzenia", onChooseFunc = "DatePickerScreen"},

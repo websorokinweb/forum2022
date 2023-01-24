@@ -24,7 +24,7 @@ namespace forum2022
         static string usersDbPath = "db/users.json";
 
 
-        static User currentUser = new User();
+        public static User currentUser = new User();
         static List<User> users;
 
         public static void SetCurrentUser(User data)
