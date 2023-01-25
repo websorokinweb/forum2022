@@ -36,18 +36,26 @@ namespace forum2022
             myPosts = posts.FindAll(item => item.author == Auth.currentUser.username);
         }
 
-        public static void DisplayPost(Post post){
+        public static void DisplayPost(Post post, bool isActive){
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(post.title);
+            Console.WriteLine((isActive ? "-" : " ") + " " + (post.title.Length > 35 ? post.title.Substring(0,35) + "..." : post.title));
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine(post.text);
-            Console.WriteLine("@" + post.author);
+            Console.WriteLine("  " + (post.text.Length > 80 ? post.text.Substring(0,80) + "..." : post.text));
+            Console.WriteLine("  " + "@" + post.author);
+            // .Substring(0,20)
+
+
+            // Console.ForegroundColor = ConsoleColor.White;
+            // Console.WriteLine(post.title);
+            // Console.ForegroundColor = ConsoleColor.Gray;
+            // Console.WriteLine(post.text);
+            // Console.WriteLine("@" + post.author);
         }
 
         public static void ShowFeed(){
             Console.WriteLine("");
             for (int i = 0; i < posts.Count; i++){
-                DisplayPost(posts[i]);
+                // DisplayPost(posts[i]);
                 if(i < posts.Count - 1){
                     Console.WriteLine("");
                 }
@@ -59,7 +67,7 @@ namespace forum2022
             int postsAmont = 0;
             for (int i = 0; i < myPosts.Count; i++){
                 if(myPosts[i].author == Auth.currentUser.username){
-                    DisplayPost(myPosts[i]);
+                    // DisplayPost(myPosts[i]);
                     postsAmont++;
                     if(i < myPosts.Count - 1){
                         Console.WriteLine("");
@@ -89,10 +97,10 @@ namespace forum2022
         // Validation
         public static bool validatePostTitle(string userInput){
             if(userInput.Length >= 5){
-                if(userInput.Length <= 60){
+                if(userInput.Length <= 80){
                     return true;            
                 }
-                Console.WriteLine("Tytuł nie może mieć więcej niż 60 symbolów");
+                Console.WriteLine("Tytuł nie może mieć więcej niż 80 symbolów");
                 return false;
             }else{
                 Console.WriteLine("Tytuł powinnen mieć minimum 5 symbolów");
@@ -101,10 +109,10 @@ namespace forum2022
         }
         public static bool validatePostText(string userInput){
             if(userInput.Length >= 15){
-                if(userInput.Length <= 300){
+                if(userInput.Length <= 400){
                     return true;            
                 }
-                Console.WriteLine("Tekst nie może mieć więcej niż 300 symbolów");
+                Console.WriteLine("Tekst nie może mieć więcej niż 400 symbolów");
                 return false;
             }else{
                 Console.WriteLine("Tekst powinnen mieć minimum 15 symbolów");
@@ -125,11 +133,29 @@ namespace forum2022
             Menu.BackMenu(Auth.LoggedMenuScreen);
         }
 
+        public static bool PostScreen(Post item){
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(item.title);
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine(item.text);
+            Console.WriteLine("@" + item.author);
+            Console.WriteLine("");
+
+            Console.WriteLine("Options))");
+
+
+            Menu.BackMenu(ShowFeedScreen);
+            return true;
+        }
+
         public static void ShowFeedScreen(){
             LoadPosts();
-            ShowFeed();
+            // ShowFeed();
+            // DisplayPost
+            Menu.ShowListAsMenu(posts, DisplayPost, PostScreen);
 
-            Menu.BackMenu(Auth.LoggedMenuScreen);
+            Menu.BackMenu(ShowFeedScreen);
         }
 
         public static void ShowMyPostsScreen(){

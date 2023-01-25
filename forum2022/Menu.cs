@@ -169,10 +169,67 @@ namespace forum2022
             Console.CursorVisible = true;
         }
 
+        public static void ShowListAsMenu(List<Post> listVar, Action<Post, Boolean> DisplayListItem, Func<Post, bool> OnChooseFunction, bool clearPreviosMessages = true)
+        {
+            Console.CursorVisible = false;
+            currentMenuOption = 0;
+
+            bool isListening = true;
+            while (isListening)
+            {
+                if(clearPreviosMessages){
+                    Console.Clear();
+                }
+
+                if (additionalMenuMessage != ""){
+                    Console.WriteLine(additionalMenuMessage);
+                }
+
+                Console.WriteLine("Wybierz opcję strzałkami w górę/w dół. Enter dla submitu");
+                Console.WriteLine("");
+                for(int i = 0; i < listVar.Count; i++){
+                    bool isActive = i == currentMenuOption;
+                    DisplayListItem(listVar[i], isActive);
+                    if(i < listVar.Count - 1){
+                        Console.WriteLine("");
+                    }
+                }
+                
+                ConsoleKeyInfo keyPressed = Console.ReadKey();
+                switch(keyPressed.Key){
+                    case ConsoleKey.UpArrow:
+                        if(currentMenuOption > 0){
+                            currentMenuOption--;
+                        }else{
+                            currentMenuOption = listVar.Count - 1;
+                        }
+                        break;
+                    case ConsoleKey.DownArrow:
+                        if(currentMenuOption < listVar.Count - 1){
+                            currentMenuOption++;
+                        }else{
+                            currentMenuOption = 0;
+                        }
+                        break;
+                    case ConsoleKey.Enter:
+                        Console.Clear();
+                        Console.CursorVisible = true;
+                        additionalMenuMessage = "";
+                        OnChooseFunction(listVar[currentMenuOption]);
+                        isListening = false;
+                        break;
+                    case ConsoleKey.Escape:
+                        isListening = false;
+                        break;
+                }
+            }
+            Console.CursorVisible = true;
+        }
+
         public static void BackMenu(Action doAfterEscape){
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("");
-            Console.WriteLine("Nacisnij Esc żeby wrócić do głównego menu.");
+            Console.WriteLine("Nacisnij Esc żeby wrócić.");
 
             Console.CursorVisible = false;
             bool isListening = true;
