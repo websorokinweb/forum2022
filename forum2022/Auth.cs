@@ -207,7 +207,12 @@ namespace forum2022
         public static bool validatePassword(string userInput){
             userToCheck.password = userInput;
             if(LoginUser(userToCheck)){
-                return true;
+                if(userInput.Length >= 8){
+                    return true;
+                }else{
+                    Console.WriteLine("Hasło musi mieć minimum 8 symbolów");
+                    return false;
+                }
             }else{
                 return false;
             }

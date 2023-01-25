@@ -66,8 +66,8 @@ namespace forum2022
                     }
                 }
             }
-            Console.WriteLine("");
             if(postsAmont != 0){
+                Console.WriteLine("");
                 Console.WriteLine("Wyniki: " + postsAmont);
             }else{
                 Console.WriteLine("Jeszcze nie masz postów");
