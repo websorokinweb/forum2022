@@ -31,6 +31,11 @@ namespace forum2022
             }
         }
 
+        static List<Post> myPosts = new List<Post>();
+        public static void LoadUserPosts(){
+            myPosts = posts.FindAll(item => item.author == Auth.currentUser.username);
+        }
+
         public static void DisplayPost(Post post){
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(post.title);
@@ -46,6 +51,26 @@ namespace forum2022
                 if(i < posts.Count - 1){
                     Console.WriteLine("");
                 }
+            }
+        }
+
+        public static void DisplayMyPosts(){
+            Console.WriteLine("");
+            int postsAmont = 0;
+            for (int i = 0; i < myPosts.Count; i++){
+                if(myPosts[i].author == Auth.currentUser.username){
+                    DisplayPost(myPosts[i]);
+                    postsAmont++;
+                    if(i < myPosts.Count - 1){
+                        Console.WriteLine("");
+                    }
+                }
+            }
+            Console.WriteLine("");
+            if(postsAmont != 0){
+                Console.WriteLine("Wyniki: " + postsAmont);
+            }else{
+                Console.WriteLine("Jeszcze nie masz postów");
             }
         }
 
@@ -103,6 +128,14 @@ namespace forum2022
         public static void ShowFeedScreen(){
             LoadPosts();
             ShowFeed();
+
+            Menu.BackMenu(Auth.LoggedMenuScreen);
+        }
+
+        public static void ShowMyPostsScreen(){
+            LoadPosts();
+            LoadUserPosts();
+            DisplayMyPosts();
 
             Menu.BackMenu(Auth.LoggedMenuScreen);
         }
