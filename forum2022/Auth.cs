@@ -120,11 +120,23 @@ namespace forum2022
         public static void ShowProfile()
         {
             Console.WriteLine("=====");
-            Console.WriteLine(currentUser.nameSurname);
+            if(currentUser.nameSurname != null){
+                Console.WriteLine(currentUser.nameSurname);
+            }else{
+                Console.WriteLine("Nie podałeś swojego imienia i nazwiska");
+            }
             Console.WriteLine("@" + currentUser.username);
-            Console.WriteLine("Urodziny: " + currentUser.birthDate);
-            Console.WriteLine("Płeć: " + currentUser.gender);
-            Console.WriteLine(currentUser.hobby);
+            if(currentUser.birthDate != null){
+                Console.WriteLine("Urodziny: " + currentUser.birthDate);
+            }else{
+                Console.WriteLine("Urodziny: nie wypełniono");
+            }
+            if(currentUser.gender != null){
+                Console.WriteLine("Płeć: " + currentUser.gender);
+            }else{
+                Console.WriteLine("Płeć: nie wypełniono");
+            }
+            // Console.WriteLine(currentUser.hobby);
             if(currentUser.admin){
                 Console.WriteLine("");
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -207,12 +219,7 @@ namespace forum2022
         public static bool validatePassword(string userInput){
             userToCheck.password = userInput;
             if(LoginUser(userToCheck)){
-                if(userInput.Length >= 8){
-                    return true;
-                }else{
-                    Console.WriteLine("Hasło musi mieć minimum 8 symbolów");
-                    return false;
-                }
+                return true;
             }else{
                 return false;
             }
@@ -236,9 +243,14 @@ namespace forum2022
             userToCheck.password = userInput;
             if (RegisterUser(userToCheck))
             {
-                Console.WriteLine("Sukces! Użytkownik jest zarejestorowany!");
-                LoginUser(userToCheck);
-                return true;
+                if(userInput.Length >= 8){
+                    Console.WriteLine("Sukces! Użytkownik jest zarejestorowany!");
+                    LoginUser(userToCheck);
+                    return true;
+                }else{
+                    Console.WriteLine("Hasło musi mieć minimum 8 symbolów");
+                    return false;
+                }
             }
             else
             {
