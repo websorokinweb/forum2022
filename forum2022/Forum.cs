@@ -84,7 +84,9 @@ namespace forum2022
 
         public static void AddPost(string postTitle, string postText){
             Post newPost = new Post(){title = postTitle, text = postText, author = Auth.currentUser.username};
+            Console.WriteLine(posts.Count);
             posts.Add(newPost);
+            Console.WriteLine(posts.Count);
             File.WriteAllText(feedDbPath, JsonSerializer.Serialize(posts));
 
             Console.WriteLine("Sukces! Post został opublikowany");
@@ -153,7 +155,7 @@ namespace forum2022
             LoadPosts();
             // ShowFeed();
             // DisplayPost
-            Menu.ShowListAsMenu(posts, DisplayPost, PostScreen);
+            Menu.ShowListAsMenu(posts, DisplayPost, PostScreen, Auth.LoggedMenuScreen);
 
             Menu.BackMenu(ShowFeedScreen);
         }

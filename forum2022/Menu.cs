@@ -169,7 +169,7 @@ namespace forum2022
             Console.CursorVisible = true;
         }
 
-        public static void ShowListAsMenu(List<Post> listVar, Action<Post, Boolean> DisplayListItem, Func<Post, bool> OnChooseFunction, bool clearPreviosMessages = true)
+        public static void ShowListAsMenu(List<Post> listVar, Action<Post, Boolean> DisplayListItem, Func<Post, bool> OnChooseFunction, Action onEscFunction, bool clearPreviosMessages = true)
         {
             Console.CursorVisible = false;
             currentMenuOption = 0;
@@ -219,6 +219,7 @@ namespace forum2022
                         isListening = false;
                         break;
                     case ConsoleKey.Escape:
+                        onEscFunction();
                         isListening = false;
                         break;
                 }

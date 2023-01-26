@@ -87,7 +87,6 @@ namespace forum2022
             else
             {
                 Console.WriteLine("FAIL! User with this username doesn't exist");
-                // RegisterUser(data);
             }
             return false;
         }
