@@ -20,6 +20,8 @@ namespace forum2022
 
         static List<Post> posts = new List<Post>();
 
+        static string currentPostSection = "all_posts";
+
         public static void LoadPosts(){
             if (File.Exists(feedDbPath))
             {
@@ -74,12 +76,12 @@ namespace forum2022
                     }
                 }
             }
-            if(postsAmont != 0){
-                Console.WriteLine("");
-                Console.WriteLine("Wyniki: " + postsAmont);
-            }else{
-                Console.WriteLine("Jeszcze nie masz postów");
-            }
+            // if(postsAmont != 0){
+            //     Console.WriteLine("");
+            //     Console.WriteLine("Wyniki: " + postsAmont);
+            // }else{
+            //     Console.WriteLine("Jeszcze nie masz postów");
+            // }
         }
 
         public static void AddPost(string postTitle, string postText){
@@ -146,8 +148,11 @@ namespace forum2022
 
             Console.WriteLine("Options))");
 
-
-            Menu.BackMenu(ShowFeedScreen);
+            if(currentPostSection == "all_posts"){
+                Menu.BackMenu(ShowFeedScreen);
+            }else if(currentPostSection == "my_posts"){
+                Menu.BackMenu(ShowMyPostsScreen);
+            }
             return true;
         }
 
@@ -155,6 +160,7 @@ namespace forum2022
             LoadPosts();
             // ShowFeed();
             // DisplayPost
+            currentPostSection = "all_posts";
             Menu.ShowListAsMenu(posts, DisplayPost, PostScreen, Auth.LoggedMenuScreen);
 
             Menu.BackMenu(ShowFeedScreen);
@@ -163,9 +169,16 @@ namespace forum2022
         public static void ShowMyPostsScreen(){
             LoadPosts();
             LoadUserPosts();
-            DisplayMyPosts();
+            currentPostSection = "my_posts";
+            Menu.ShowListAsMenu(myPosts, DisplayPost, PostScreen, Auth.LoggedMenuScreen);
+            // if(postsAmont != 0){
+            //     Console.WriteLine("");
+            //     Console.WriteLine("Wyniki: " + postsAmont);
+            // }else{
+            //     Console.WriteLine("Jeszcze nie masz postów");
+            // }
 
-            Menu.BackMenu(Auth.LoggedMenuScreen);
+            Menu.BackMenu(ShowMyPostsScreen);
         }
     }
 }
