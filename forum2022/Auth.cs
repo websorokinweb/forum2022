@@ -116,6 +116,25 @@ namespace forum2022
             PickLoginOrRegister();
         }
 
+        public static void ShowSomeoneProfile(){
+            User user = users.Find(x => x.username == Forum.pickedPost.author);
+            Console.WriteLine("=====");
+            Console.WriteLine(user.nameSurname);
+            Console.WriteLine("@" + user.username);
+            if(user.birthDate != null){
+                Console.WriteLine("Urodziny: " + user.birthDate);
+            }else{
+                Console.WriteLine("Urodziny: nie wypełniono");
+            }
+            if(user.gender != null){
+                Console.WriteLine("Płeć: " + user.gender);
+            }else{
+                Console.WriteLine("Płeć: nie wypełniono");
+            }
+            Console.WriteLine("=====");
+            Menu.BackMenu(() => Forum.PostScreen(Forum.pickedPost));
+        }
+
         public static void ShowProfile()
         {
             Console.WriteLine("=====");

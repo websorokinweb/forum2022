@@ -21,6 +21,7 @@ namespace forum2022
         static List<Post> posts = new List<Post>();
 
         static string currentPostSection = "all_posts";
+        public static Post pickedPost;
 
         public static void LoadPosts(){
             if (File.Exists(feedDbPath))
@@ -44,6 +45,9 @@ namespace forum2022
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("  " + (post.text.Length > 80 ? post.text.Substring(0,80) + "..." : post.text));
             Console.WriteLine("  " + "@" + post.author);
+
+            pickedPost = post;
+
             // .Substring(0,20)
 
 
@@ -94,7 +98,7 @@ namespace forum2022
             Console.WriteLine("Sukces! Post został opublikowany");
         }
 
-        public static void DeletePost(Post post){
+        public static void DeletePost(){
 
         }
 
@@ -137,7 +141,7 @@ namespace forum2022
             Menu.BackMenu(Auth.LoggedMenuScreen);
         }
 
-        public static bool PostScreen(Post item){
+        public static void PostScreenBody(Post item){
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(item.title);
@@ -145,14 +149,38 @@ namespace forum2022
             Console.WriteLine(item.text);
             Console.WriteLine("@" + item.author);
             Console.WriteLine("");
+        }
 
-            Console.WriteLine("Options))");
+        public static bool PostScreen(Post item){
+            List<MenuOption> currentPostOptions;
+            if(item.author == Auth.currentUser.username){
+                currentPostOptions = new List<MenuOption>(){
+                    new MenuOption(){title = "Delete my post", onChooseFunc = "DeletePost"},
+                };
+            }else if(Auth.currentUser.admin){
+                currentPostOptions = new List<MenuOption>(){
+                    new MenuOption(){title = "Delete post", onChooseFunc = "DeletePost"},
+                    new MenuOption(){title = "View author", onChooseFunc = "ShowSomeoneProfile"},
+                };
+            }else{
+                currentPostOptions = new List<MenuOption>(){
+                    new MenuOption(){title = "View author", onChooseFunc = "ShowSomeoneProfile"},
+                };
+            }
+
+            Menu.SetMenuOptions(currentPostOptions);
 
             if(currentPostSection == "all_posts"){
-                Menu.BackMenu(ShowFeedScreen);
+                Menu.ShowMenu(ShowFeedScreen, () => PostScreenBody(item));
             }else if(currentPostSection == "my_posts"){
-                Menu.BackMenu(ShowMyPostsScreen);
+                Menu.ShowMenu(ShowMyPostsScreen, () => PostScreenBody(item));
             }
+
+            // if(currentPostSection == "all_posts"){
+            //     Menu.BackMenu(ShowFeedScreen);
+            // }else if(currentPostSection == "my_posts"){
+            //     Menu.BackMenu(ShowMyPostsScreen);
+            // }
             return true;
         }
 

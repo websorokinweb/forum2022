@@ -23,8 +23,8 @@ namespace forum2022
                     break;
 
                 // Others
-                case "GetAllUsers":
-                    Auth.GetAllUsers();
+                case "ShowSomeoneProfile":
+                    Auth.ShowSomeoneProfile();
                     break;
 
                 // Logged actions
@@ -62,6 +62,11 @@ namespace forum2022
                 case "ShowMyPostsScreen":
                     Forum.ShowMyPostsScreen();
                     break;
+
+                // Post
+                case "DeletePost":
+                    Forum.DeletePost();
+                    break;
             }
         }
 
@@ -73,8 +78,8 @@ namespace forum2022
             // }
         static int currentMenuOption = 0;
 
-        public static void SetMenuOptions(){
-            
+        public static void SetMenuOptions(List<MenuOption> newOptions){
+            currentMenuOptions = newOptions;
         }
 
         public static void SetCategoryMenuOptions(string screen){
@@ -127,7 +132,7 @@ namespace forum2022
                 Console.Clear();
                 PreMenuMessage();
 
-                Console.WriteLine("Wybierz opcję strzałkami w górę/w dół. Enter dla submitu");
+                Console.WriteLine("Wybierz opcję strzałkami w górę/w dół. Enter dla submitu. Esc żeby wrócić");
                 ShowMenuOptions();
                 
                 ConsoleKeyInfo keyPressed = Console.ReadKey();
