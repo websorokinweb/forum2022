@@ -326,13 +326,13 @@ namespace forum2022
         public static void PickLoginOrRegister(){
             Menu.setAdditionalMenuMessage("Zaloguj lub zarejestruj się:");
             Menu.SetCategoryMenuOptions("PickLoginOrRegister");
-            Menu.ShowMenu(PickLoginOrRegister);
+            Menu.ShowMenu(PickLoginOrRegister, Menu.DefaultMenuMessage);
         }
 
         public static void LoggedMenuScreen(){
             Menu.setAdditionalMenuMessage("Menu:");
             Menu.SetCategoryMenuOptions("Logged");
-            Menu.ShowMenu(LoggedMenuScreen);
+            Menu.ShowMenu(LoggedMenuScreen, Menu.DefaultMenuMessage);
         }
 
         public static void LoginScreen(){
@@ -363,7 +363,7 @@ namespace forum2022
 
         public static void GenderPickerScreen(){
             Menu.SetCategoryMenuOptions("GenderPicker");
-            Menu.ShowMenu(LoggedMenuScreen);
+            Menu.ShowMenu(LoggedMenuScreen, Menu.DefaultMenuMessage);
 
             Menu.BackMenu(LoggedMenuScreen);
         }

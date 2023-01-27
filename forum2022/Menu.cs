@@ -119,7 +119,9 @@ namespace forum2022
             }
         }
 
-        public static void ShowMenu(Action onEscFunction, bool clearPreviosMessages = true)
+        public static Action DefaultMenuMessage = () => Console.WriteLine("Menu");
+
+        public static void ShowMenu(Action onEscFunction, Action PreMenuMessage)
         {
             Console.CursorVisible = false;
             currentMenuOption = 0;
@@ -127,13 +129,8 @@ namespace forum2022
             bool isListening = true;
             while (isListening)
             {
-                if(clearPreviosMessages){
-                    Console.Clear();
-                }
-
-                if (additionalMenuMessage != ""){
-                    Console.WriteLine(additionalMenuMessage);
-                }
+                Console.Clear();
+                PreMenuMessage();
 
                 Console.WriteLine("Wybierz opcję strzałkami w górę/w dół. Enter dla submitu");
                 ShowMenuOptions();
