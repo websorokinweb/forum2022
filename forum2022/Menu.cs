@@ -119,7 +119,7 @@ namespace forum2022
             }
         }
 
-        public static void ShowMenu(bool clearPreviosMessages = true)
+        public static void ShowMenu(Action onEscFunction, bool clearPreviosMessages = true)
         {
             Console.CursorVisible = false;
             currentMenuOption = 0;
@@ -162,6 +162,7 @@ namespace forum2022
                         isListening = false;
                         break;
                     case ConsoleKey.Escape:
+                        onEscFunction();
                         isListening = false;
                         break;
                 }
