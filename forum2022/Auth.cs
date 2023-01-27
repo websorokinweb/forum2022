@@ -323,14 +323,17 @@ namespace forum2022
 
         static User userToCheck = new User();
 
+        public static void WelcomeMessage(){
+            Console.WriteLine("Witam na Forum2022))");
+            Console.WriteLine("Zaloguj lub zarejestruj się:");
+        }
+
         public static void PickLoginOrRegister(){
-            Menu.setAdditionalMenuMessage("Zaloguj lub zarejestruj się:");
             Menu.SetCategoryMenuOptions("PickLoginOrRegister");
-            Menu.ShowMenu(PickLoginOrRegister, Menu.DefaultMenuMessage);
+            Menu.ShowMenu(PickLoginOrRegister, WelcomeMessage);
         }
 
         public static void LoggedMenuScreen(){
-            Menu.setAdditionalMenuMessage("Menu:");
             Menu.SetCategoryMenuOptions("Logged");
             Menu.ShowMenu(LoggedMenuScreen, Menu.DefaultMenuMessage);
         }

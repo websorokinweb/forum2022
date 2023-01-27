@@ -72,11 +72,6 @@ namespace forum2022
                 // new MenuOption(){title = "Show my profile", onChooseFunc = "ShowProfile"}
             // }
         static int currentMenuOption = 0;
-        static string additionalMenuMessage = "";
-
-        public static void setAdditionalMenuMessage(string message){
-            additionalMenuMessage = message;
-        }
 
         public static void SetMenuOptions(){
             
@@ -154,7 +149,6 @@ namespace forum2022
                     case ConsoleKey.Enter:
                         Console.Clear();
                         Console.CursorVisible = true;
-                        additionalMenuMessage = "";
                         CallFunctionByName(currentMenuOptions[currentMenuOption].onChooseFunc);
                         isListening = false;
                         break;
@@ -177,10 +171,6 @@ namespace forum2022
             {
                 if(clearPreviosMessages){
                     Console.Clear();
-                }
-
-                if (additionalMenuMessage != ""){
-                    Console.WriteLine(additionalMenuMessage);
                 }
 
                 Console.WriteLine("Wybierz opcję strzałkami w górę/w dół. Enter dla submitu");
@@ -212,7 +202,6 @@ namespace forum2022
                     case ConsoleKey.Enter:
                         Console.Clear();
                         Console.CursorVisible = true;
-                        additionalMenuMessage = "";
                         OnChooseFunction(listVar[currentMenuOption]);
                         isListening = false;
                         break;
