@@ -192,6 +192,17 @@ namespace forum2022
         }
 
         // Setters
+        public static void setNewPassword(string newPassword){
+            int needUserIndex = users.FindIndex(item => item.id == currentUser.id);
+            User needUser = users[needUserIndex];
+            needUser.password = newPassword;
+            users[needUserIndex] = needUser;
+            File.WriteAllText(usersDbPath, JsonSerializer.Serialize(users));
+
+            GetAllUsers();
+            SetCurrentUser(needUser);
+            Console.WriteLine("Sukces! Nowe hasło zostało ustawione");
+        }
 
         public static void setNewUsername(string newUsername){
             int needUserIndex = users.FindIndex(item => item.id == currentUser.id);
@@ -268,10 +279,10 @@ namespace forum2022
         public static bool validateRegisterLogin(string userInput)
         {
             if(userInput.Length >= 20){
-                Console.WriteLine("Login nie może mieć więcej niż 20 symbolów");
+                Console.WriteLine("Login nie może mieć więcej niż 20 znaków");
                 return false;
             }else if(userInput.Length < 5){
-                Console.WriteLine("Login nie może mieć mniej niż 5 symbolów");
+                Console.WriteLine("Login nie może mieć mniej niż 5 znaków");
                 return false;
             }else{
                 if (CheckIfUserExist(userInput))
@@ -288,14 +299,14 @@ namespace forum2022
 
         public static bool validateRegisterPassword(string userInput)
         {
-            if(userInput.Length >= 8){
+            if(userInput.Length >= 8 && userInput.Length <= 32){
                 userToCheck.password = userInput;
                 RegisterUser(userToCheck);
                 Console.WriteLine("Sukces! Użytkownik jest zarejestorowany!");
                 LoginUser(userToCheck);
                 return true;
             }else{
-                Console.WriteLine("Hasło musi mieć minimum 8 symbolów");
+                Console.WriteLine("Hasło musi mieć minimum 8 znaky");
                 return false;
             }
         }
@@ -361,11 +372,20 @@ namespace forum2022
             Console.WriteLine(message);
             return false;
         }
-        public static bool validateUsernameCurrentPassword(string userInput){
+        public static bool validateCurrentPassword(string userInput){
             if(userInput == currentUser.password){
                 return true;
             }else{
                 Console.WriteLine("Nieprawidlowe hasło. Sprobuj jeszcze raz");
+                return false;
+            }
+        }
+
+        public static bool validateNewPassword(string userInput){
+            if(userInput.Length >= 8 && userInput.Length <= 32){
+                return true;
+            }else{
+                Console.WriteLine("Hasło musi mieć minimum 8 znaky i maxsymalnie 32");
                 return false;
             }
         }
@@ -377,10 +397,10 @@ namespace forum2022
             }
 
             if(userInput.Length >= 20){
-                Console.WriteLine("Pomyłka! Login nie może mieć więcej niż 20 symbolów");
+                Console.WriteLine("Pomyłka! Login nie może mieć więcej niż 20 znaky");
                 return false;
             }else if(userInput.Length < 5){
-                Console.WriteLine("Pomyłka! Login nie może mieć mniej niż 5 symbolów");
+                Console.WriteLine("Pomyłka! Login nie może mieć mniej niż 5 znaky");
                 return false;
             }else{
                 return true;
@@ -426,9 +446,18 @@ namespace forum2022
 
         public static void UsernameEditScreen(){
             string newUsername, password;
-            password = Helpers.SaveUserStr("Twoje hasło:", validateUsernameCurrentPassword);
+            password = Helpers.SaveUserStr("Twoje hasło:", validateCurrentPassword);
             newUsername = Helpers.SaveUserStr("Nowy login:", validateNewUsername);
             setNewUsername(newUsername);
+
+            Menu.BackMenu(LoggedMenuScreen);
+        }
+
+        public static void PasswordEditScreen(){
+            string password, newPassword;
+            password = Helpers.SaveUserStr("Twoje hasło:", validateCurrentPassword);
+            newPassword = Helpers.SaveUserStr("Nowe hasło:", validateNewPassword);
+            setNewPassword(newPassword);
 
             Menu.BackMenu(LoggedMenuScreen);
         }
