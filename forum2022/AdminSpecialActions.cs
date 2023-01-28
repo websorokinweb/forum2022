@@ -35,8 +35,12 @@ namespace forum2022
         // Validate
         public static bool validateAdminRegisterPassword(string userInput){
             if(userInput.Length >= 8 && userInput.Length <= 32){
-                userToCheck.password = userInput;
-                return true;
+                if(!userInput.Contains(" ")){
+                    userToCheck.password = userInput;
+                    return true;
+                }else{
+                    return false;
+                }
             }else{
                 Console.WriteLine("Hasło musi mieć minimum 8 znaky");
                 return false;

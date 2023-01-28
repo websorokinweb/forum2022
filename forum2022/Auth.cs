@@ -295,11 +295,16 @@ namespace forum2022
         public static bool validateRegisterPassword(string userInput)
         {
             if(userInput.Length >= 8 && userInput.Length <= 32){
-                userToCheck.password = userInput;
-                RegisterUser(userToCheck);
-                Console.WriteLine("Sukces! Użytkownik jest zarejestorowany!");
-                LoginUser(userToCheck);
-                return true;
+                if(!userInput.Contains(" ")){
+                    userToCheck.password = userInput;
+                    RegisterUser(userToCheck);
+                    Console.WriteLine("Sukces! Użytkownik jest zarejestorowany!");
+                    LoginUser(userToCheck);
+                    return true;
+                }else{
+                    Console.WriteLine("Pomyłka! Hasło nie może mieć spacji!");
+                    return false;
+                }
             }else{
                 Console.WriteLine("Hasło musi mieć minimum 8 znaky");
                 return false;
