@@ -22,6 +22,14 @@ namespace forum2022
                     Auth.RegisterScreen();
                     break;
 
+                // Admin actions
+                case "AdminActionsScreen":
+                    AdminSpecialActions.AdminActionsScreen();
+                    break;
+                case "AdminCreateUser":
+                    AdminSpecialActions.AdminCreateUser();
+                    break;
+
                 // Others
                 case "ShowSomeoneProfile":
                     Auth.ShowSomeoneProfile();
@@ -115,6 +123,14 @@ namespace forum2022
                         new MenuOption(){title = "Zmień username", onChooseFunc = "UsernameEditScreen"},
                         new MenuOption(){title = "Zmień hasło", onChooseFunc = "PasswordEditScreen"},
                         new MenuOption(){title = "Wyloguj", onChooseFunc = "LogOutUser"},
+                    };
+                    if(Auth.currentUser.admin){
+                        currentMenuOptions.Add(new MenuOption(){title = "Panel administratora", onChooseFunc = "AdminActionsScreen"});
+                    }
+                    break;
+                case "AdminPanel":
+                    currentMenuOptions = new List<MenuOption>(){
+                        new MenuOption(){title = "Dodaj użytkownika", onChooseFunc = "AdminCreateUser"},
                     };
                     break;
                 case "GenderPicker":
