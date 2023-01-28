@@ -255,14 +255,19 @@ namespace forum2022
 
         public static bool validateRegisterLogin(string userInput)
         {
-            if (CheckIfUserExist(userInput))
-            {
-                Console.WriteLine("Użytkownik z takim loginem już istnieje.");
+            if(userInput.Length >= 20){
+                Console.WriteLine("Login nie może mieć więcej niż 20 symbolów");
                 return false;
-            }
-            else
-            {
-                return true;
+            }else{
+                if (CheckIfUserExist(userInput))
+                {
+                    Console.WriteLine("Użytkownik z takim loginem już istnieje.");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
 
