@@ -42,6 +42,9 @@ namespace forum2022
                 case "NameSurnameEditScreen":
                     Auth.NameSurnameEditScreen();
                     break;
+                case "UsernameEditScreen":
+                    Auth.UsernameEditScreen();
+                    break;
                 case "setGenderMale":
                     Auth.setGender("male");
                     break;
@@ -106,6 +109,7 @@ namespace forum2022
                         new MenuOption(){title = "Edytuj imię i nazwisko", onChooseFunc = "NameSurnameEditScreen"},
                         new MenuOption(){title = "Edytuj płeć", onChooseFunc = "GenderPickerScreen"},
                         new MenuOption(){title = "Edytuj datę urodzenia", onChooseFunc = "DatePickerScreen"},
+                        new MenuOption(){title = "Zmień username", onChooseFunc = "UsernameEditScreen"},
                         new MenuOption(){title = "Wyloguj", onChooseFunc = "LogOutUser"},
                     };
                     break;

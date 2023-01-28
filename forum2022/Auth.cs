@@ -193,6 +193,18 @@ namespace forum2022
 
         // Setters
 
+        public static void setNewUsername(string newUsername){
+            int needUserIndex = users.FindIndex(item => item.id == currentUser.id);
+            User needUser = users[needUserIndex];
+            needUser.username = newUsername;
+            users[needUserIndex] = needUser;
+            File.WriteAllText(usersDbPath, JsonSerializer.Serialize(users));
+
+            GetAllUsers();
+            SetCurrentUser(needUser);
+            Console.WriteLine("Sukces! Nowy login został ustawiony");
+        }
+
         public static void SetNameSurname(string nameSurname){
             int needUserIndex = users.FindIndex(item => item.username == currentUser.username);
             User needUser = users[needUserIndex];
@@ -257,6 +269,9 @@ namespace forum2022
         {
             if(userInput.Length >= 20){
                 Console.WriteLine("Login nie może mieć więcej niż 20 symbolów");
+                return false;
+            }else if(userInput.Length < 5){
+                Console.WriteLine("Login nie może mieć mniej niż 5 symbolów");
                 return false;
             }else{
                 if (CheckIfUserExist(userInput))
@@ -346,6 +361,31 @@ namespace forum2022
             Console.WriteLine(message);
             return false;
         }
+        public static bool validateUsernameCurrentPassword(string userInput){
+            if(userInput == currentUser.password){
+                return true;
+            }else{
+                Console.WriteLine("Nieprawidlowe hasło. Sprobuj jeszcze raz");
+                return false;
+            }
+        }
+
+        public static bool validateNewUsername(string userInput){
+            if(userInput == currentUser.username){
+                Console.WriteLine("Pomyłka! Nowy login taki sam jak stary");
+                return false;
+            }
+
+            if(userInput.Length >= 20){
+                Console.WriteLine("Pomyłka! Login nie może mieć więcej niż 20 symbolów");
+                return false;
+            }else if(userInput.Length < 5){
+                Console.WriteLine("Pomyłka! Login nie może mieć mniej niż 5 symbolów");
+                return false;
+            }else{
+                return true;
+            }
+        }
 
         // Screens
 
@@ -382,6 +422,15 @@ namespace forum2022
             userToCheck.password = Helpers.SaveUserStr("Hasło:", validateRegisterPassword);
 
             LoggedMenuScreen();
+        }
+
+        public static void UsernameEditScreen(){
+            string newUsername, password;
+            password = Helpers.SaveUserStr("Twoje hasło:", validateUsernameCurrentPassword);
+            newUsername = Helpers.SaveUserStr("Nowy login:", validateNewUsername);
+            setNewUsername(newUsername);
+
+            Menu.BackMenu(LoggedMenuScreen);
         }
 
         public static void NameSurnameEditScreen(){
