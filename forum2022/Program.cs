@@ -7,25 +7,6 @@ namespace forum2022
         static void Main(string[] args)
         {
             Auth.InitAuth();
-            // Menu.ShowMenu();
-            // Menu.SetMenuOptions();
         }
     }
 }
-
-//{
-//    "users": [
-//        {
-//        "username": "clown",
-//            "password": "test"
-//        }
-//    ]
-//}
-
-// Bin\debug\app\here
-/*[
-    {
-        "username": "clown",
-       "password": "test"
-    }
-]*/

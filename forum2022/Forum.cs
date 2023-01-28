@@ -101,7 +101,7 @@ namespace forum2022
         public static void DeletePost(){
             posts.Remove(pickedPost);
             File.WriteAllText(feedDbPath, JsonSerializer.Serialize(posts));
-            Console.WriteLine("Post został usunięty");
+            Console.WriteLine("Sukces! Post został usunięty");
         }
 
         // Validation
@@ -162,8 +162,8 @@ namespace forum2022
                 };
             }else if(Auth.currentUser.admin){
                 currentPostOptions = new List<MenuOption>(){
-                    new MenuOption(){title = "Delete post", onChooseFunc = "DeletePost"},
                     new MenuOption(){title = "View author", onChooseFunc = "ShowSomeoneProfile"},
+                    new MenuOption(){title = "Delete post", onChooseFunc = "DeletePost"},
                 };
             }else{
                 currentPostOptions = new List<MenuOption>(){
