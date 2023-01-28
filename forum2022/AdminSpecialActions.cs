@@ -88,7 +88,7 @@ namespace forum2022
             Menu.ShowListAsMenuOfUsers(Auth.users, UsersListItemScreen, UserScreen, AdminActionsScreen);
         }
         public static void UsersListItemScreen(User item, bool isActive){
-            Console.WriteLine((isActive ? "-" : " ") + " " + "@" + item.username);
+            Console.WriteLine((isActive ? "-" : " ") + " " + (item.id == Auth.currentUser.id ? "TWOJE KONTO | " : "") + "@" + item.username);
             Console.WriteLine("  " + "id: " + item.id);
         }
 
