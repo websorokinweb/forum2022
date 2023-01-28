@@ -99,7 +99,9 @@ namespace forum2022
         }
 
         public static void DeletePost(){
-
+            posts.Remove(pickedPost);
+            File.WriteAllText(feedDbPath, JsonSerializer.Serialize(posts));
+            Console.WriteLine("Post został usunięty");
         }
 
         // Validation
@@ -152,6 +154,7 @@ namespace forum2022
         }
 
         public static bool PostScreen(Post item){
+            pickedPost = item;
             List<MenuOption> currentPostOptions;
             if(item.author == Auth.currentUser.username){
                 currentPostOptions = new List<MenuOption>(){
