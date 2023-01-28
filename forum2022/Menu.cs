@@ -32,6 +32,9 @@ namespace forum2022
                 case "AdminUserListScreen":
                     AdminSpecialActions.AdminUserListScreen();
                     break;
+                case "ClearPostsScreen":
+                    AdminSpecialActions.ClearPostsScreen();
+                    break;
 
                 // Others
                 case "ShowSomeoneProfile":
@@ -135,6 +138,7 @@ namespace forum2022
                     currentMenuOptions = new List<MenuOption>(){
                         new MenuOption(){title = "Dodaj użytkownika", onChooseFunc = "AdminCreateUser"},
                         new MenuOption(){title = "Kontrola użytkowników", onChooseFunc = "AdminUserListScreen"},
+                        new MenuOption(){title = "Wyczyść posty", onChooseFunc = "ClearPostsScreen"},
                     };
                     break;
                 case "GenderPicker":

@@ -9,6 +9,10 @@ namespace forum2022
 {
     public class AdminSpecialActions{
         // Setters
+        public static void ClearPosts(){
+            Forum.posts = new List<Post>();
+            File.WriteAllText(Forum.feedDbPath, JsonSerializer.Serialize(Forum.posts));
+        }
 
         // Validate
         public static bool validateAdminRegisterPassword(string userInput){
@@ -55,7 +59,12 @@ namespace forum2022
 
             Auth.RegisterUser(userToCheck);
 
-            Menu.BackMenu(Auth.LoggedMenuScreen);
+            Menu.BackMenu(AdminActionsScreen);
+        }
+        public static void ClearPostsScreen(){
+            ClearPosts();
+            Console.WriteLine("Posty zostały wyczyszczone");
+            Menu.BackMenu(AdminActionsScreen);
         }
         public static void AdminUserListScreen(){
             Menu.ShowListAsMenuOfUsers(Auth.users, UsersListItemScreen, UserScreen, AdminActionsScreen);

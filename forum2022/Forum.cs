@@ -18,9 +18,9 @@ namespace forum2022
 
     internal class Forum
     {
-        static string feedDbPath = "db/feed.json";
+        public static string feedDbPath = "db/feed.json";
 
-        static List<Post> posts = new List<Post>();
+        public static List<Post> posts = new List<Post>();
 
         static string currentPostSection = "all_posts";
         public static Post pickedPost;
