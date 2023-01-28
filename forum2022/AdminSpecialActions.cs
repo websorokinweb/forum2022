@@ -8,10 +8,16 @@ using System.Text.Json.Serialization;
 namespace forum2022
 {
     public class AdminSpecialActions{
+        static User pickedUser = new User();
+
         // Setters
         public static void ClearPosts(){
             Forum.posts = new List<Post>();
             File.WriteAllText(Forum.feedDbPath, JsonSerializer.Serialize(Forum.posts));
+        }
+        public static void DeleteUser(){
+            Auth.users.Remove(pickedUser);
+            File.WriteAllText(Auth.usersDbPath, JsonSerializer.Serialize(Auth.users));
         }
 
         // Validate
@@ -73,7 +79,9 @@ namespace forum2022
             Console.WriteLine((isActive ? "-" : " ") + " " + "@" + item.username);
             Console.WriteLine("  " + "id: " + item.id);
         }
-        public static bool UserScreen(User item){
+
+        public static void UserScreenBody(User item){
+            pickedUser = item;
             Console.WriteLine();
             Console.WriteLine("id: " + item.id);
             Console.WriteLine("@" + item.username);
@@ -97,10 +105,19 @@ namespace forum2022
                 Console.WriteLine("Płeć: nie wypełniono");
             }
             Console.WriteLine();
-
-            Menu.BackMenu(AdminUserListScreen);
+        }
+        public static bool UserScreen(User item){
+            Menu.SetCategoryMenuOptions("UserActionsForAdmin");
+            Menu.ShowMenu(AdminUserListScreen, () => UserScreenBody(item));
 
             return true;
+        }
+
+        public static void DeleteUserScreen(){
+            DeleteUser();
+            Console.WriteLine("Sukces! Użytkownik został usunięty");
+
+            Menu.BackMenu(AdminUserListScreen);
         }
     }
 }

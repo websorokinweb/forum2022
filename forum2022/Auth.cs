@@ -22,7 +22,7 @@ namespace forum2022
     public class Auth
     {
         // Db paths
-        static string usersDbPath = "db/users.json";
+        public static string usersDbPath = "db/users.json";
 
 
         public static User currentUser = new User();
