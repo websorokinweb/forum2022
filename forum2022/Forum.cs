@@ -12,6 +12,8 @@ namespace forum2022
         public string title { get; set; } 
         public string text { get; set; } 
         public int author { get; set; } 
+        public List<int> likes { get; set; }
+        public List<int> dislikes { get; set; }
     }
 
     internal class Forum
@@ -47,6 +49,9 @@ namespace forum2022
 
             User user = Auth.users.Find(x => x.id == post.author);
             Console.WriteLine("  " + "@" + user.username);
+
+            Console.WriteLine("  " + "Likes:" + post.likes.Count);
+            Console.WriteLine("  " + "Dislikes:" + post.dislikes.Count);
 
             pickedPost = post;
 
@@ -91,7 +96,13 @@ namespace forum2022
         }
 
         public static void AddPost(string postTitle, string postText){
-            Post newPost = new Post(){title = postTitle, text = postText, author = Auth.currentUser.id};
+            Post newPost = new Post(){
+                title = postTitle,
+                text = postText,
+                author = Auth.currentUser.id,
+                likes = new List<int>(),
+                dislikes = new List<int>()
+            };
             newPost.id = posts.Count + 1;
             bool isChecking = true;
             while (isChecking)
@@ -111,6 +122,48 @@ namespace forum2022
             File.WriteAllText(feedDbPath, JsonSerializer.Serialize(posts));
 
             Console.WriteLine("Sukces! Post został opublikowany");
+        }
+
+        public static void LikePost(){
+            bool alreadyLiked = pickedPost.likes.Contains(Auth.currentUser.id);
+            if(alreadyLiked){
+                pickedPost.likes.Remove(Auth.currentUser.id);
+                Console.WriteLine("Sukces! Like został usunięty");
+            }else{
+                pickedPost.likes.Add(Auth.currentUser.id);
+                Console.WriteLine("Sukces! Like dodany");
+                bool alreadyDisliked = pickedPost.dislikes.Contains(Auth.currentUser.id);
+                if(alreadyDisliked){
+                    pickedPost.dislikes.Remove(Auth.currentUser.id);
+                }
+            }
+
+            int needPostIndex = posts.FindIndex(item => item.id == pickedPost.id);
+            posts[needPostIndex] = pickedPost;
+            File.WriteAllText(feedDbPath, JsonSerializer.Serialize(posts));
+
+            Menu.BackMenu(() => PostScreen(pickedPost));
+        }
+
+        public static void DislikePost(){
+            bool alreadyDisliked = pickedPost.dislikes.Contains(Auth.currentUser.id);
+            if(alreadyDisliked){
+                pickedPost.dislikes.Remove(Auth.currentUser.id);
+                Console.WriteLine("Sukces! Dislike został usunięty");
+            }else{
+                pickedPost.dislikes.Add(Auth.currentUser.id);
+                Console.WriteLine("Sukces! Dislike dodany");
+                bool alreadyLiked = pickedPost.likes.Contains(Auth.currentUser.id);
+                if(alreadyLiked){
+                    pickedPost.likes.Remove(Auth.currentUser.id);
+                }
+            }
+
+            int needPostIndex = posts.FindIndex(item => item.id == pickedPost.id);
+            posts[needPostIndex] = pickedPost;
+            File.WriteAllText(feedDbPath, JsonSerializer.Serialize(posts));
+
+            Menu.BackMenu(() => PostScreen(pickedPost));
         }
 
         public static void DeletePost(){
@@ -166,6 +219,8 @@ namespace forum2022
             Console.WriteLine(item.text);
             User user = Auth.users.Find(x => x.id == item.author);
             Console.WriteLine("@" + user.username);
+            Console.WriteLine("Likes:" + item.likes.Count);
+            Console.WriteLine("Dislikes:" + item.dislikes.Count);
             Console.WriteLine("");
         }
 
@@ -175,17 +230,20 @@ namespace forum2022
             if(item.author == Auth.currentUser.id){
                 currentPostOptions = new List<MenuOption>(){
                     new MenuOption(){title = "Like", onChooseFunc = "LikePost"},
+                    new MenuOption(){title = "Dislike", onChooseFunc = "DislikePost"},
                     new MenuOption(){title = "Delete my post", onChooseFunc = "DeletePost"},
                 };
             }else if(Auth.currentUser.admin){
                 currentPostOptions = new List<MenuOption>(){
                     new MenuOption(){title = "Like", onChooseFunc = "LikePost"},
+                    new MenuOption(){title = "Dislike", onChooseFunc = "DislikePost"},
                     new MenuOption(){title = "View author", onChooseFunc = "ShowSomeoneProfile"},
                     new MenuOption(){title = "Delete post", onChooseFunc = "DeletePost"},
                 };
             }else{
                 currentPostOptions = new List<MenuOption>(){
                     new MenuOption(){title = "Like", onChooseFunc = "LikePost"},
+                    new MenuOption(){title = "Dislike", onChooseFunc = "DislikePost"},
                     new MenuOption(){title = "View author", onChooseFunc = "ShowSomeoneProfile"},
                 };
             }

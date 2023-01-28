@@ -67,6 +67,12 @@ namespace forum2022
                 case "DeletePost":
                     Forum.DeletePost();
                     break;
+                case "LikePost":
+                    Forum.LikePost();
+                    break;
+                case "DislikePost":
+                    Forum.DislikePost();
+                    break;
             }
         }
 

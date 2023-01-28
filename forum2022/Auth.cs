@@ -16,7 +16,6 @@ namespace forum2022
         public string nameSurname { get; set; }
         public string birthDate { get; set; }
         public string gender { get; set; }
-        public List<int> likes { get; set; }
         public List<string> hobby { get; set; }
     }
 
@@ -135,7 +134,11 @@ namespace forum2022
         public static void ShowSomeoneProfile(){
             User user = users.Find(x => x.id == Forum.pickedPost.author);
             Console.WriteLine("=====");
-            Console.WriteLine(user.nameSurname);
+            if(user.nameSurname != null){
+                Console.WriteLine(user.nameSurname);
+            }else{
+                Console.WriteLine("Imię i nazwisko: nie wypełniono");
+            }
             Console.WriteLine("@" + user.username);
             if(user.birthDate != null){
                 Console.WriteLine("Urodziny: " + user.birthDate);
