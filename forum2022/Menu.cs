@@ -29,6 +29,9 @@ namespace forum2022
                 case "AdminCreateUser":
                     AdminSpecialActions.AdminCreateUser();
                     break;
+                case "AdminUserListScreen":
+                    AdminSpecialActions.AdminUserListScreen();
+                    break;
 
                 // Others
                 case "ShowSomeoneProfile":
@@ -131,6 +134,7 @@ namespace forum2022
                 case "AdminPanel":
                     currentMenuOptions = new List<MenuOption>(){
                         new MenuOption(){title = "Dodaj użytkownika", onChooseFunc = "AdminCreateUser"},
+                        new MenuOption(){title = "Kontrola użytkowników", onChooseFunc = "AdminUserListScreen"},
                     };
                     break;
                 case "GenderPicker":
@@ -208,7 +212,7 @@ namespace forum2022
                     Console.Clear();
                 }
 
-                Console.WriteLine("Wybierz opcję strzałkami w górę/w dół. Enter dla submitu");
+                Console.WriteLine("Wybierz opcję strzałkami w górę/w dół. Enter dla submitu. Esc żeby wrócić");
                 Console.WriteLine("");
                 for(int i = 0; i < listVar.Count; i++){
                     bool isActive = i == currentMenuOption;
@@ -266,6 +270,60 @@ namespace forum2022
                         break;
                 }
             }
+        }
+
+        // Additional
+        public static void ShowListAsMenuOfUsers(List<User> listVar, Action<User, Boolean> DisplayListItem, Func<User, bool> OnChooseFunction, Action onEscFunction, bool clearPreviosMessages = true)
+        {
+            Console.CursorVisible = false;
+            currentMenuOption = 0;
+            bool isListening = true;
+            while (isListening)
+            {
+                if(clearPreviosMessages){
+                    Console.Clear();
+                }
+
+                Console.WriteLine("Wybierz opcję strzałkami w górę/w dół. Enter dla submitu. Esc żeby wrócić");
+                Console.WriteLine("");
+
+                for(int i = 0; i < listVar.Count; i++){
+                    bool isActive = i == currentMenuOption;
+                    DisplayListItem(listVar[i], isActive);
+                    if(i < listVar.Count - 1){
+                        Console.WriteLine("");
+                    }
+                }
+                
+                ConsoleKeyInfo keyPressed = Console.ReadKey();
+                switch(keyPressed.Key){
+                    case ConsoleKey.UpArrow:
+                        if(currentMenuOption > 0){
+                            currentMenuOption--;
+                        }else{
+                            currentMenuOption = listVar.Count - 1;
+                        }
+                        break;
+                    case ConsoleKey.DownArrow:
+                        if(currentMenuOption < listVar.Count - 1){
+                            currentMenuOption++;
+                        }else{
+                            currentMenuOption = 0;
+                        }
+                        break;
+                    case ConsoleKey.Enter:
+                        Console.Clear();
+                        Console.CursorVisible = true;
+                        OnChooseFunction(listVar[currentMenuOption]);
+                        isListening = false;
+                        break;
+                    case ConsoleKey.Escape:
+                        onEscFunction();
+                        isListening = false;
+                        break;
+                }
+            }
+            Console.CursorVisible = true;
         }
     }
 }

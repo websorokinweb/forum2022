@@ -41,7 +41,7 @@ namespace forum2022
             myPosts = posts.FindAll(item => item.author == Auth.currentUser.id);
         }
 
-        public static void DisplayPost(Post post, bool isActive){
+        public static void PostsListItemScreen(Post post, bool isActive){
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine((isActive ? "-" : " ") + " " + (post.title.Length > 35 ? post.title.Substring(0,35) + "..." : post.title));
             Console.ForegroundColor = ConsoleColor.Gray;
@@ -68,7 +68,7 @@ namespace forum2022
         public static void ShowFeed(){
             Console.WriteLine("");
             for (int i = 0; i < posts.Count; i++){
-                // DisplayPost(posts[i]);
+                // PostsListItemScreen(posts[i]);
                 if(i < posts.Count - 1){
                     Console.WriteLine("");
                 }
@@ -80,7 +80,7 @@ namespace forum2022
             int postsAmont = 0;
             for (int i = 0; i < myPosts.Count; i++){
                 if(myPosts[i].author == Auth.currentUser.id){
-                    // DisplayPost(myPosts[i]);
+                    // PostsListItemScreen(myPosts[i]);
                     postsAmont++;
                     if(i < myPosts.Count - 1){
                         Console.WriteLine("");
@@ -267,9 +267,9 @@ namespace forum2022
         public static void ShowFeedScreen(){
             LoadPosts();
             // ShowFeed();
-            // DisplayPost
+            // PostsListItemScreen
             currentPostSection = "all_posts";
-            Menu.ShowListAsMenu(posts, DisplayPost, PostScreen, Auth.LoggedMenuScreen);
+            Menu.ShowListAsMenu(posts, PostsListItemScreen, PostScreen, Auth.LoggedMenuScreen);
 
             Menu.BackMenu(ShowFeedScreen);
         }
@@ -278,7 +278,7 @@ namespace forum2022
             LoadPosts();
             LoadUserPosts();
             currentPostSection = "my_posts";
-            Menu.ShowListAsMenu(myPosts, DisplayPost, PostScreen, Auth.LoggedMenuScreen);
+            Menu.ShowListAsMenu(myPosts, PostsListItemScreen, PostScreen, Auth.LoggedMenuScreen);
             // if(postsAmont != 0){
             //     Console.WriteLine("");
             //     Console.WriteLine("Wyniki: " + postsAmont);

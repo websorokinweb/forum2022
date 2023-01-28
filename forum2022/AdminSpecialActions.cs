@@ -57,5 +57,41 @@ namespace forum2022
 
             Menu.BackMenu(Auth.LoggedMenuScreen);
         }
+        public static void AdminUserListScreen(){
+            Menu.ShowListAsMenuOfUsers(Auth.users, UsersListItemScreen, UserScreen, AdminActionsScreen);
+        }
+        public static void UsersListItemScreen(User item, bool isActive){
+            Console.WriteLine((isActive ? "-" : " ") + " " + "@" + item.username);
+            Console.WriteLine("  " + "id: " + item.id);
+        }
+        public static bool UserScreen(User item){
+            Console.WriteLine();
+            Console.WriteLine("id: " + item.id);
+            Console.WriteLine("@" + item.username);
+            Console.WriteLine("Hasło: " + item.password);
+            Console.WriteLine();
+
+            Console.WriteLine("Dodatkowe dane:");
+            if(item.nameSurname != null){
+                Console.WriteLine(item.nameSurname);
+            }else{
+                Console.WriteLine("Imię i nazwisko: nie wypełniono");
+            }
+            if(item.birthDate != null){
+                Console.WriteLine("Urodziny: " + item.birthDate);
+            }else{
+                Console.WriteLine("Urodziny: nie wypełniono");
+            }
+            if(item.gender != null){
+                Console.WriteLine("Płeć: " + item.gender);
+            }else{
+                Console.WriteLine("Płeć: nie wypełniono");
+            }
+            Console.WriteLine();
+
+            Menu.BackMenu(AdminUserListScreen);
+
+            return true;
+        }
     }
 }
