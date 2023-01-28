@@ -38,6 +38,9 @@ namespace forum2022
                 case "DeleteUserScreen":
                     AdminSpecialActions.DeleteUserScreen();
                     break;
+                case "EditUserPasswordScreen":
+                    AdminSpecialActions.EditUserPasswordScreen();
+                    break;
 
                 // Others
                 case "ShowSomeoneProfile":
@@ -153,6 +156,7 @@ namespace forum2022
                 case "UserActionsForAdmin":
                     currentMenuOptions = new List<MenuOption>(){
                         new MenuOption(){title = "Usunąć konto", onChooseFunc = "DeleteUserScreen"},
+                        new MenuOption(){title = "Zmień hasło", onChooseFunc = "EditUserPasswordScreen"},
                     };
                     break;
             }

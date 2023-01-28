@@ -18,6 +18,18 @@ namespace forum2022
         public static void DeleteUser(){
             Auth.users.Remove(pickedUser);
             File.WriteAllText(Auth.usersDbPath, JsonSerializer.Serialize(Auth.users));
+            Auth.GetAllUsers();
+        }
+        public static void setAnotherUserNewPassword(string newPassword, int needUserId){
+            int needUserIndex = Auth.users.FindIndex(item => item.id == needUserId);
+            User needUser = Auth.users[needUserIndex];
+            needUser.password = newPassword;
+            Auth.users[needUserIndex] = needUser;
+            File.WriteAllText(Auth.usersDbPath, JsonSerializer.Serialize(Auth.users));
+            pickedUser = needUser;
+            Console.WriteLine("Sukces! Nowe hasło zostało ustawione");
+
+            Auth.GetAllUsers();
         }
 
         // Validate
@@ -112,12 +124,18 @@ namespace forum2022
 
             return true;
         }
-
         public static void DeleteUserScreen(){
             DeleteUser();
             Console.WriteLine("Sukces! Użytkownik został usunięty");
 
             Menu.BackMenu(AdminUserListScreen);
+        }
+        public static void EditUserPasswordScreen(){
+            string newPassword;
+            newPassword = Helpers.SaveUserStr("Nowe hasło:", Auth.validateNewPassword);
+            setAnotherUserNewPassword(newPassword, pickedUser.id);
+
+            Menu.BackMenu(() => UserScreen(pickedUser));
         }
     }
 }
