@@ -268,20 +268,14 @@ namespace forum2022
 
         public static bool validateRegisterPassword(string userInput)
         {
-            userToCheck.password = userInput;
-            if (RegisterUser(userToCheck))
-            {
-                if(userInput.Length >= 8){
-                    Console.WriteLine("Sukces! Użytkownik jest zarejestorowany!");
-                    LoginUser(userToCheck);
-                    return true;
-                }else{
-                    Console.WriteLine("Hasło musi mieć minimum 8 symbolów");
-                    return false;
-                }
-            }
-            else
-            {
+            if(userInput.Length >= 8){
+                userToCheck.password = userInput;
+                RegisterUser(userToCheck);
+                Console.WriteLine("Sukces! Użytkownik jest zarejestorowany!");
+                LoginUser(userToCheck);
+                return true;
+            }else{
+                Console.WriteLine("Hasło musi mieć minimum 8 symbolów");
                 return false;
             }
         }
