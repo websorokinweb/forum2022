@@ -10,7 +10,7 @@ namespace forum2022
     public struct Post{
         public string title { get; set; } 
         public string text { get; set; } 
-        public string author { get; set; } 
+        public int author { get; set; } 
 
     }
 
@@ -36,7 +36,7 @@ namespace forum2022
 
         static List<Post> myPosts = new List<Post>();
         public static void LoadUserPosts(){
-            myPosts = posts.FindAll(item => item.author == Auth.currentUser.username);
+            myPosts = posts.FindAll(item => item.author == Auth.currentUser.id);
         }
 
         public static void DisplayPost(Post post, bool isActive){
@@ -44,7 +44,9 @@ namespace forum2022
             Console.WriteLine((isActive ? "-" : " ") + " " + (post.title.Length > 35 ? post.title.Substring(0,35) + "..." : post.title));
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("  " + (post.text.Length > 80 ? post.text.Substring(0,80) + "..." : post.text));
-            Console.WriteLine("  " + "@" + post.author);
+
+            User user = Auth.users.Find(x => x.id == post.author);
+            Console.WriteLine("  " + "@" + user.username);
 
             pickedPost = post;
 
@@ -72,7 +74,7 @@ namespace forum2022
             Console.WriteLine("");
             int postsAmont = 0;
             for (int i = 0; i < myPosts.Count; i++){
-                if(myPosts[i].author == Auth.currentUser.username){
+                if(myPosts[i].author == Auth.currentUser.id){
                     // DisplayPost(myPosts[i]);
                     postsAmont++;
                     if(i < myPosts.Count - 1){
@@ -89,7 +91,7 @@ namespace forum2022
         }
 
         public static void AddPost(string postTitle, string postText){
-            Post newPost = new Post(){title = postTitle, text = postText, author = Auth.currentUser.username};
+            Post newPost = new Post(){title = postTitle, text = postText, author = Auth.currentUser.id};
             Console.WriteLine(posts.Count);
             posts.Add(newPost);
             Console.WriteLine(posts.Count);
@@ -149,24 +151,28 @@ namespace forum2022
             Console.WriteLine(item.title);
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine(item.text);
-            Console.WriteLine("@" + item.author);
+            User user = Auth.users.Find(x => x.id == item.author);
+            Console.WriteLine("@" + user.username);
             Console.WriteLine("");
         }
 
         public static bool PostScreen(Post item){
             pickedPost = item;
             List<MenuOption> currentPostOptions;
-            if(item.author == Auth.currentUser.username){
+            if(item.author == Auth.currentUser.id){
                 currentPostOptions = new List<MenuOption>(){
+                    new MenuOption(){title = "Like", onChooseFunc = "LikePost"},
                     new MenuOption(){title = "Delete my post", onChooseFunc = "DeletePost"},
                 };
             }else if(Auth.currentUser.admin){
                 currentPostOptions = new List<MenuOption>(){
+                    new MenuOption(){title = "Like", onChooseFunc = "LikePost"},
                     new MenuOption(){title = "View author", onChooseFunc = "ShowSomeoneProfile"},
                     new MenuOption(){title = "Delete post", onChooseFunc = "DeletePost"},
                 };
             }else{
                 currentPostOptions = new List<MenuOption>(){
+                    new MenuOption(){title = "Like", onChooseFunc = "LikePost"},
                     new MenuOption(){title = "View author", onChooseFunc = "ShowSomeoneProfile"},
                 };
             }

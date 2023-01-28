@@ -9,12 +9,14 @@ namespace forum2022
 {
     public struct User
     {
+        public int id { get; set; }
         public string username { get; set; }
         public string password { get; set; }
         public bool admin { get; set; }
         public string nameSurname { get; set; }
         public string birthDate { get; set; }
         public string gender { get; set; }
+        public List<int> likes { get; set; }
         public List<string> hobby { get; set; }
     }
 
@@ -25,10 +27,11 @@ namespace forum2022
 
 
         public static User currentUser = new User();
-        static List<User> users;
+        public static List<User> users;
 
         public static void SetCurrentUser(User data)
         {
+            currentUser.id = data.id;
             currentUser.username = data.username;
             currentUser.password = data.password;
             currentUser.admin = data.admin;
@@ -101,8 +104,21 @@ namespace forum2022
             }
             else
             {
+                data.id = users.Count + 1;
+                bool isChecking = true;
+                while (isChecking)
+                {
+                    int needIndex = users.FindIndex(item => item.id == data.id);
+                    if(needIndex != -1)
+                    {
+                        data.id++;
+                    }
+                    else
+                    {
+                        isChecking = false;
+                    }
+                }
                 users.Add(data);
-                // Saving file
                 File.WriteAllText(usersDbPath, JsonSerializer.Serialize(users));
                 return true;
             }
@@ -117,7 +133,7 @@ namespace forum2022
         }
 
         public static void ShowSomeoneProfile(){
-            User user = users.Find(x => x.username == Forum.pickedPost.author);
+            User user = users.Find(x => x.id == Forum.pickedPost.author);
             Console.WriteLine("=====");
             Console.WriteLine(user.nameSurname);
             Console.WriteLine("@" + user.username);
