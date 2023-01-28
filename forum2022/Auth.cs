@@ -185,15 +185,6 @@ namespace forum2022
         public static void InitAuth()
         {
             GetAllUsers();
-
-            // User testLogin = new User();
-            // testLogin.username = "clown";
-            // testLogin.password = "test";
-            // LoginUser(testLogin);
-
-            // RegisterUser(testLogin);
-            // ShowProfile();
-
             PickLoginOrRegister();
         }
 

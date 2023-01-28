@@ -8,10 +8,10 @@ using System.Text.Json.Serialization;
 namespace forum2022
 {
     public struct Post{
+        public int id { get; set; } 
         public string title { get; set; } 
         public string text { get; set; } 
         public int author { get; set; } 
-
     }
 
     internal class Forum
@@ -92,9 +92,22 @@ namespace forum2022
 
         public static void AddPost(string postTitle, string postText){
             Post newPost = new Post(){title = postTitle, text = postText, author = Auth.currentUser.id};
-            Console.WriteLine(posts.Count);
+            newPost.id = posts.Count + 1;
+            bool isChecking = true;
+            while (isChecking)
+            {
+                int needIndex = posts.FindIndex(item => item.id == newPost.id);
+                if(needIndex != -1)
+                {
+                    newPost.id++;
+                }
+                else
+                {
+                    isChecking = false;
+                }
+            }
+
             posts.Add(newPost);
-            Console.WriteLine(posts.Count);
             File.WriteAllText(feedDbPath, JsonSerializer.Serialize(posts));
 
             Console.WriteLine("Sukces! Post został opublikowany");
