@@ -16,7 +16,6 @@ namespace forum2022
         public string nameSurname { get; set; }
         public string birthDate { get; set; }
         public string gender { get; set; }
-        public List<string> hobby { get; set; }
     }
 
     public class Auth
@@ -46,10 +45,6 @@ namespace forum2022
             if (data.gender != null)
             {
                 currentUser.gender = data.gender;
-            }
-            if (data.hobby != null)
-            {
-                currentUser.hobby = data.hobby;
             }
         }
 
