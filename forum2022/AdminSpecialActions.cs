@@ -76,6 +76,7 @@ namespace forum2022
             }
 
             Auth.RegisterUser(userToCheck);
+            Console.WriteLine("Sukces! Użytkownik został dodany");
 
             Menu.BackMenu(AdminActionsScreen);
         }
@@ -88,7 +89,7 @@ namespace forum2022
             Menu.ShowListAsMenuOfUsers(Auth.users, UsersListItemScreen, UserScreen, AdminActionsScreen);
         }
         public static void UsersListItemScreen(User item, bool isActive){
-            Console.WriteLine((isActive ? "-" : " ") + " " + (item.id == Auth.currentUser.id ? "TWOJE KONTO | " : "") + "@" + item.username);
+            Console.WriteLine((isActive ? "-" : " ") + " " + (item.id == Auth.currentUser.id ? "TWOJE KONTO | " : "") + (item.admin ? "ADMIN | " : "") + "@" + item.username);
             Console.WriteLine("  " + "id: " + item.id);
         }
 
@@ -98,6 +99,7 @@ namespace forum2022
             Console.WriteLine("id: " + item.id);
             Console.WriteLine("@" + item.username);
             Console.WriteLine("Hasło: " + item.password);
+            Console.WriteLine("Admin: " + (item.admin ? "Tak" : "Nie"));
             Console.WriteLine();
 
             Console.WriteLine("Dodatkowe dane:");
