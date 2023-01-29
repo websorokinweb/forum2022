@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace forum2022
 {
@@ -58,45 +56,6 @@ namespace forum2022
             Console.WriteLine("  " + "Dislikes:" + post.dislikes.Count);
 
             pickedPost = post;
-
-            // .Substring(0,20)
-
-
-            // Console.ForegroundColor = ConsoleColor.White;
-            // Console.WriteLine(post.title);
-            // Console.ForegroundColor = ConsoleColor.Gray;
-            // Console.WriteLine(post.text);
-            // Console.WriteLine("@" + post.author);
-        }
-
-        public static void ShowFeed(){
-            Console.WriteLine("");
-            for (int i = 0; i < posts.Count; i++){
-                // PostsListItemScreen(posts[i]);
-                if(i < posts.Count - 1){
-                    Console.WriteLine("");
-                }
-            }
-        }
-
-        public static void DisplayMyPosts(){
-            Console.WriteLine("");
-            int postsAmont = 0;
-            for (int i = 0; i < myPosts.Count; i++){
-                if(myPosts[i].author == Auth.currentUser.id){
-                    // PostsListItemScreen(myPosts[i]);
-                    postsAmont++;
-                    if(i < myPosts.Count - 1){
-                        Console.WriteLine("");
-                    }
-                }
-            }
-            // if(postsAmont != 0){
-            //     Console.WriteLine("");
-            //     Console.WriteLine("Wyniki: " + postsAmont);
-            // }else{
-            //     Console.WriteLine("Jeszcze nie masz postów");
-            // }
         }
 
         public static void AddPost(string postTitle, string postText){
@@ -264,18 +223,11 @@ namespace forum2022
                 Menu.ShowMenu(ShowMyPostsScreen, () => PostScreenBody(item));
             }
 
-            // if(currentPostSection == "all_posts"){
-            //     Menu.BackMenu(ShowFeedScreen);
-            // }else if(currentPostSection == "my_posts"){
-            //     Menu.BackMenu(ShowMyPostsScreen);
-            // }
             return true;
         }
 
         public static void ShowFeedScreen(){
             LoadPosts();
-            // ShowFeed();
-            // PostsListItemScreen
             currentPostSection = "all_posts";
             Menu.ShowListAsMenu(posts, PostsListItemScreen, PostScreen, Auth.LoggedMenuScreen);
 
@@ -287,12 +239,6 @@ namespace forum2022
             LoadUserPosts();
             currentPostSection = "my_posts";
             Menu.ShowListAsMenu(myPosts, PostsListItemScreen, PostScreen, Auth.LoggedMenuScreen);
-            // if(postsAmont != 0){
-            //     Console.WriteLine("");
-            //     Console.WriteLine("Wyniki: " + postsAmont);
-            // }else{
-            //     Console.WriteLine("Jeszcze nie masz postów");
-            // }
 
             Menu.BackMenu(ShowMyPostsScreen);
         }

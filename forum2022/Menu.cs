@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace forum2022
 {
@@ -103,11 +102,6 @@ namespace forum2022
         }
 
         static List<MenuOption> currentMenuOptions = new List<MenuOption>();
-        // {
-                // new MenuOption(){title = "Get all users", onChooseFunc = "GetAllUsers"},
-                // new MenuOption(){title = "Get current user", onChooseFunc = "GetCurrentUser"},
-                // new MenuOption(){title = "Show my profile", onChooseFunc = "ShowProfile"}
-            // }
         static int currentMenuOption = 0;
 
         public static void SetMenuOptions(List<MenuOption> newOptions){

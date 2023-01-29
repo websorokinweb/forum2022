@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace forum2022
 {
     internal class Helpers
     {
-        public static bool validateFalse(string userInput){
-            return true;
-        }
         public static double SaveUserDouble(string message, string errorMessage)
         {
             double correctUserInput;

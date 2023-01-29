@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace forum2022
 {
@@ -168,7 +166,6 @@ namespace forum2022
             }else{
                 Console.WriteLine("Płeć: nie wypełniono");
             }
-            // Console.WriteLine(currentUser.hobby);
             if(currentUser.admin){
                 Console.WriteLine("");
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -394,7 +391,7 @@ namespace forum2022
                 Console.WriteLine("Hasło nie może mieć spacji");
                 return false;
             }
-            
+
             if(userInput.Length >= 8 && userInput.Length <= 32){
                 return true;
             }else{
