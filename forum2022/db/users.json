@@ -1,0 +1,1 @@
+[{"id":1,"username":"admin","password":"admin","admin":true,"nameSurname":"Jan","birthDate":"28.02.2005","gender":"M\u0119\u017Cczyzna"},{"id":2,"username":"testuser","password":"testuser","admin":false,"nameSurname":null,"birthDate":null,"gender":null},{"id":3,"username":"firstuser","password":"hahahaha","admin":false,"nameSurname":null,"birthDate":null,"gender":null}]

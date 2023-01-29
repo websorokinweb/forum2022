@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace forum2022
 {
@@ -36,13 +34,18 @@ namespace forum2022
             return correctUserInput;
         }
 
-        public static string SaveUserStr(string message, string errorMessage)
+        public static string SaveUserStr(string message, Func<string, bool> validateString)
         {
             string userInput;
 
-            Console.Write(message + " ");
-            userInput = Console.ReadLine();
-            return userInput;
+            while(true){
+                Console.Write(message + " ");
+                userInput = Console.ReadLine();
+                if(validateString(userInput)){
+                    return userInput;
+                }
+
+            }
         }
     }
 }
