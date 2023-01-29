@@ -1,1 +1,1 @@
-[]
+[{"id":1,"title":"Pierwszy post","text":"Naprawde pierwszy post","author":1,"likes":[1,2],"dislikes":[]},{"id":2,"title":"Zadania","text":"W tym miejscu bede publikowal tresci zadan do samodzielnego wykonania. Rozwiazania nalezy umieszczac w kontenerze na pliki - taki bedzie przy kazdym z zadan.","author":3,"likes":[],"dislikes":[3]}]
