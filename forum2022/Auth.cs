@@ -279,6 +279,9 @@ namespace forum2022
             }else if(userInput.Length < 5){
                 Console.WriteLine("Login nie może mieć mniej niż 5 znaków");
                 return false;
+            }else if(userInput.Contains(" ")){
+                Console.WriteLine("Login nie może mieć spacji");
+                return false;
             }else{
                 if (CheckIfUserExist(userInput))
                 {
@@ -312,6 +315,11 @@ namespace forum2022
         }
 
         public static bool validateNameSurname(string userInput){
+            if (Char.IsWhiteSpace(userInput[0])){
+                Console.WriteLine("Piewszy znak nie może mieć spacji");
+                return false;
+            }
+            
             if(userInput.Length >= 3){
                 return true;
             }else{
@@ -382,6 +390,11 @@ namespace forum2022
         }
 
         public static bool validateNewPassword(string userInput){
+            if(userInput.Contains(" ")){
+                Console.WriteLine("Hasło nie może mieć spacji");
+                return false;
+            }
+            
             if(userInput.Length >= 8 && userInput.Length <= 32){
                 return true;
             }else{
@@ -401,6 +414,9 @@ namespace forum2022
                 return false;
             }else if(userInput.Length < 5){
                 Console.WriteLine("Pomyłka! Login nie może mieć mniej niż 5 znaky");
+                return false;
+            }else if(userInput.Contains(" ")){
+                Console.WriteLine("Login nie może mieć spacji");
                 return false;
             }else{
                 return true;

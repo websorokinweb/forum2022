@@ -35,11 +35,14 @@ namespace forum2022
         // Validate
         public static bool validateAdminRegisterPassword(string userInput){
             if(userInput.Length >= 8 && userInput.Length <= 32){
-                if(!userInput.Contains(" ")){
+                if(userInput.Contains(" ")){
+                    return false;
+                }else if(userInput.Contains(" ")){
+                    Console.WriteLine("Hasło nie może mieć spacji");
+                    return false;
+                }else{
                     userToCheck.password = userInput;
                     return true;
-                }else{
-                    return false;
                 }
             }else{
                 Console.WriteLine("Hasło musi mieć minimum 8 znaky");

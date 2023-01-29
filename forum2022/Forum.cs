@@ -48,7 +48,11 @@ namespace forum2022
             Console.WriteLine("  " + (post.text.Length > 80 ? post.text.Substring(0,80) + "..." : post.text));
 
             User user = Auth.users.Find(x => x.id == post.author);
-            Console.WriteLine("  " + "@" + user.username);
+            if(user.username == null){
+                Console.WriteLine("  " + "Konto autora zostało usunięto");
+            }else{
+                Console.WriteLine("  " + "@" + user.username);
+            }
 
             Console.WriteLine("  " + "Likes:" + post.likes.Count);
             Console.WriteLine("  " + "Dislikes:" + post.dislikes.Count);
@@ -218,7 +222,11 @@ namespace forum2022
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine(item.text);
             User user = Auth.users.Find(x => x.id == item.author);
-            Console.WriteLine("@" + user.username);
+            if(user.username == null){
+                Console.WriteLine("Konto autora zostało usunięto");
+            }else{
+                Console.WriteLine("@" + user.username);
+            }
             Console.WriteLine("Likes:" + item.likes.Count);
             Console.WriteLine("Dislikes:" + item.dislikes.Count);
             Console.WriteLine("");
